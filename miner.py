@@ -124,6 +124,7 @@ def inv_edit(item: str, modification: int):
 
 
 def mine(block_x: int, block_y: int) -> bool:
+	# todo fix unbreakable
 	b = world[block_y][block_x]
 	if b:
 		# add drops to inventory

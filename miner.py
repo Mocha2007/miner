@@ -5,13 +5,13 @@ from sys import exit
 from time import sleep
 
 
-def log(level: int, *message):
+def log(log_level: int, *message):
 	levels = {
 		0: 'info',
 		1: 'warn',
 		2: 'err',
 	}
-	print(levels[level]+':', *message)
+	print(levels[log_level]+':', *message)
 
 
 def text(message: str, coords: (int, int)):
@@ -66,9 +66,9 @@ blocks = set()
 
 
 def get_block_by_name(block_name: str) -> Block:
-	for block in blocks:
-		if block.name == block_name:
-			return block
+	for b in blocks:
+		if b.name == block_name:
+			return b
 	raise ValueError(block_name)
 
 
@@ -186,6 +186,8 @@ while 1:
 	x, y = player['pos']
 	rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
 	pygame.draw.rect(screen, player['color'], rect)
+	# todo show coords
+	# todo show inventory
 	# gravity
 	gravity()
 	# events

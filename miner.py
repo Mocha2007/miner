@@ -97,7 +97,7 @@ for gen in world_gen:
 		raise ValueError(gen['type'])
 	log(0, count, gen['block'], gen['type'], 'generated')
 
-# todo: player setup
+# player setup
 
 player = {
 	'health': rules['player_hp'],
@@ -110,14 +110,37 @@ player = {
 }
 
 
+def inv_edit(item: str, modification: int):
+	# todo fix negative items
+	if item in player['inventory']:
+		player['inventory'][item] += modification
+	else:
+		player['inventory'][item] = modification
+
+
+def mine(block_x: int, block_y: int) -> bool:
+	b = world[block_x][block_y]
+	if b:
+		# add drops to inventory
+		for item_name, amt in b.drops.items():
+			inv_edit(item_name, amt)
+		# delete block
+		world[block_y][block_x] = None
+		return True
+	return False
+
+
 def move_player(d_x: int, d_y: int) -> bool:
 	new_pos = [player['pos'][0]+d_x, player['pos'][1]+d_y]
-	print(new_pos)
+	# print(new_pos)
 	if new_pos[0] < 0 or width-1 < new_pos[0]:
 		return False
-	if new_pos[1] < 0 or world[new_pos[0]][new_pos[1]] is None:
+	if new_pos[1] < 0 or world[new_pos[1]][new_pos[0]] is None:
 		player['pos'] = new_pos
 		return True
+	# try to mine UNLESS flying
+	if player['counters']['flying'] == 0 and world[new_pos[0]][new_pos[1]]:
+		mine(*new_pos)
 	return False
 
 
@@ -126,13 +149,13 @@ def gravity() -> bool:
 		player['counters']['flying'] += 1
 		return False
 	player['counters']['flying'] = 0
-	if world[x][y+1] is None or y < -1:
+	if world[y+1][x] is None or y < -1:
 		move_player(0, 1)
 		return True
 	return False
 
 
-# todo: display
+# display
 fps = 20
 tick = 0
 block_size = rules['block_size']
@@ -175,8 +198,8 @@ while 1:
 	pressed = pygame.key.get_pressed()
 	if pressed[pygame.K_w]: # up
 		move_player(0, -1)
-	# if pressed[pygame.K_s]: # down
-		# move_player(0, 1)
+	if pressed[pygame.K_s]: # down
+		move_player(0, 1)
 	if pressed[pygame.K_a]: # left
 		move_player(-1, 0)
 	if pressed[pygame.K_d]: # right

@@ -1,0 +1,19 @@
+[
+  {
+	"type": "zone",
+	"material": "dirt",
+	"depth": [0, 582]
+  },
+  {
+	"type": "ore",
+	"material": "ironium",
+	"depth": [1, 582],
+	"chance": 0.074
+  },
+  {
+	"type": "ore",
+	"material": "bronzium",
+	"depth": [1, 582],
+	"chance": 0.074
+  }
+]

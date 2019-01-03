@@ -1,0 +1,25 @@
+{
+	"test": {
+		"drops": {"test": 1},
+		"prereq": "iron",
+		"color": [255, 0, 255],
+	  	"value": 69
+	},
+	"dirt": {
+		"color": [75, 55, 45]
+	},
+	"stone": {
+		"prereq": "~",
+		"color": [192, 192, 192]
+	},
+	"ironium": {
+		"drops": {"ironium": 1},
+		"color": [102, 91, 91],
+		"value": 30
+	},
+	"bronzium": {
+		"drops": {"bronzium": 1},
+		"color": [166, 70, 2],
+		"value": 60
+	}
+}

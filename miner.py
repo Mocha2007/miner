@@ -106,7 +106,19 @@ player = {
 	'color': (255, 0, 0),
 }
 
+
+def move_player(d_x: int, d_y: int) -> bool:
+	new_pos = player['pos'][0]+d_x, player['pos'][1]+d_y
+	print(new_pos)
+	if new_pos[0] < 0 or width < new_pos[0]:
+		return False
+	if new_pos[1] < 0 or world[new_pos[0]][new_pos[1]] is None:
+		player['pos'] = new_pos
+		return True
+	return False
+
 # todo: display
+
 
 block_size = rules['block_size']
 relative_center = int(size[0]/2//block_size),  int(size[1]/2//block_size) # in-game coords, relative
@@ -121,7 +133,10 @@ while 1:
 		for x in range(absolute_rect[0], absolute_rect[2]):
 			if x < 0 or width < x:
 				continue
-			block = level[x]
+			try:
+				block = level[x]
+			except IndexError:
+				continue
 			if block is None:
 				continue
 			if cfg['mini_mode']:
@@ -140,5 +155,14 @@ while 1:
 			pygame.display.quit()
 			pygame.quit()
 			exit()
+		elif event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_w: # up
+				move_player(0, -1)
+			elif event.key == pygame.K_s: # down
+				move_player(0, 1)
+			elif event.key == pygame.K_a: # left
+				move_player(-1, 0)
+			elif event.key == pygame.K_d: # right
+				move_player(1, 0)
 	refresh()
 	sleep(1/20)

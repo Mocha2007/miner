@@ -77,21 +77,25 @@ height = rules['height']
 world = [[None]*width]*height
 
 for gen in world_gen:
+	count = 0
 	if gen['type'] == 'zone':
 		for y in range(*gen['height']):
 			world[y] = [get_block_by_name(gen['block'])]*width
+			count += 1
 	elif gen['type'] == 'ore':
 		for y in range(*gen['height']):
 			current_level = world[y]
 			for x in range(width):
 				if random() < gen['chance']:
 					current_level[x] = get_block_by_name(gen['block'])
+					count += 1
 	else:
 		raise ValueError(gen['type'])
-	log(0, gen['block'], gen['type'], 'generated')
+	log(0, count, gen['block'], gen['type'], 'generated')
 
 # todo: display
 
+block_size = rules['block_size']
 screen.fill((0, 0, 0))
 for y in range(height):
 	level = world[y]
@@ -99,7 +103,11 @@ for y in range(height):
 		block = level[x]
 		if block is None:
 			continue
-		screen.set_at((x, y), block.color)
+		if cfg['mini_mode']:
+			screen.set_at((x, y), block.color)
+		else:
+			rect = x*block_size, y*block_size, block_size, block_size
+			pygame.draw.rect(screen, block.color, rect)
 	refresh()
 
 while 1:

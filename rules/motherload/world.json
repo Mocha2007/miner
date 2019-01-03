@@ -15,5 +15,52 @@
 	"block": "bronzium",
 	"height": [1, 582],
 	"chance": 0.074
+  },
+  {
+	"type": "ore",
+	"block": "silverium",
+	"height": [4, 582],
+	"chance": 0.025
+  },
+  {
+	"type": "ore",
+	"block": "goldium",
+	"height": [4, 582],
+	"chance": 0.004
+  },
+  {
+	"type": "ore",
+	"block": "platinum",
+	"height": [52, 582],
+	"chance": 0.004,
+	"note1": "chance is conjecture, height is approximate"
+  },
+  {
+	"type": "ore",
+	"block": "stone",
+	"height": [130, 582],
+	"chance": 0.057,
+	"note1": "chance is approximate, height is approximate"
+  },
+  {
+	"type": "ore",
+	"block": "fossil",
+	"height": [139, 582],
+	"chance": 0.004,
+	"note1": "chance is conjecture, height is approximate"
+  },
+  {
+	"type": "ore",
+	"block": "treasure",
+	"height": [146, 582],
+	"chance": 0.004,
+	"note1": "chance is conjecture, height is approximate"
+  },
+  {
+	"type": "ore",
+	"block": "einsteinium",
+	"height": [228, 582],
+	"chance": 0.004,
+	"note1": "chance is conjecture, height is approximate"
   }
 ]

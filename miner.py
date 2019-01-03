@@ -3,6 +3,7 @@ from json import load
 from random import choice, random
 from sys import exit
 from time import sleep
+from math import ceil
 
 # sound setup
 pygame.mixer.init()
@@ -193,7 +194,7 @@ def sfx():
 fps = 20
 tick = 0
 block_size = rules['block_size']
-relative_center = int(size[0]/2//block_size),  int(size[1]/2//block_size) # in-game coords, relative
+relative_center = ceil(size[0]/2/block_size),  ceil(size[1]/2/block_size) # in-game coords, relative
 
 while 1:
 	game_events = set()

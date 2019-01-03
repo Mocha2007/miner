@@ -62,5 +62,12 @@
 	"height": [228, 582],
 	"chance": 0.004,
 	"note1": "chance is conjecture, height is approximate"
+  },
+  {
+	"type": "ore",
+	"block": "ruby",
+	"height": [257, 582],
+	"chance": 0.004,
+	"note1": "chance is conjecture, height is approximate"
   }
 ]

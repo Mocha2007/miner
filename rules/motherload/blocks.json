@@ -46,5 +46,9 @@
 	"einsteinium": {
 		"drops": {"einsteinium": 1},
 		"color": [86, 103, 120]
+	},
+	"ruby": {
+		"drops": {"ruby": 1},
+		"color": [195, 70, 77]
 	}
 }

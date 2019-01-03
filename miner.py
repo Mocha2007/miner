@@ -123,7 +123,7 @@ for gen in world_gen:
 player = {
 	'health': rules['player_hp'],
 	'inventory': {},
-	'pos': [0, -1],
+	'pos': [width//2, -1],
 	'color': (255, 0, 0),
 	'counters': {
 		'flying': 0,

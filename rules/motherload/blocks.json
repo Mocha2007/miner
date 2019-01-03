@@ -3,14 +3,15 @@
 		"drops": {"test": 1},
 		"prereq": "iron",
 		"color": [255, 0, 255],
-	  	"value": 69
+	  	"value": 69,
+	  	"tags": ["unminable"]
 	},
 	"dirt": {
 		"color": [75, 55, 45]
 	},
 	"stone": {
-		"prereq": "~",
-		"color": [192, 192, 192]
+		"color": [192, 192, 192],
+	  	"tags": ["unminable"]
 	},
 	"ironium": {
 		"drops": {"ironium": 1},
@@ -50,5 +51,21 @@
 	"ruby": {
 		"drops": {"ruby": 1},
 		"color": [195, 70, 77]
+	},
+	"lava": {
+		"color": [196, 46, 10],
+	  	"tags": ["unminable"]
+	},
+	"emerald": {
+		"drops": {"emerald": 1},
+		"color": [96, 183, 81]
+	},
+	"diamond": {
+		"drops": {"diamond": 1},
+		"color": [235, 234, 233]
+	},
+	"amazonite": {
+		"drops": {"amazonite": 1},
+		"color": [90, 149, 147]
 	}
 }

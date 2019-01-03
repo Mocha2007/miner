@@ -77,6 +77,8 @@ class Block:
 		self.color = tuple(kwargs['color']) if 'color' in kwargs else (255, 0, 255)
 		# value
 		self.value = kwargs['value'] if 'value' in kwargs else 0
+		# tags
+		self.tags = set(kwargs['tags']) if 'tags' in kwargs else set()
 		log(0, name, 'block registered')
 
 
@@ -137,9 +139,12 @@ def inv_edit(item: str, modification: int):
 
 
 def mine(block_x: int, block_y: int) -> bool:
-	# todo fix unbreakable
 	b = world[block_y][block_x]
 	if b:
+		# unbreakable?
+		if 'unbreakable' in b.tags:
+			return False
+		# todo tool level
 		# add drops to inventory
 		for item_name, amt in b.drops.items():
 			inv_edit(item_name, amt)

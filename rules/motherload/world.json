@@ -69,5 +69,33 @@
 	"height": [257, 582],
 	"chance": 0.004,
 	"note1": "chance is conjecture, height is approximate"
+  },
+  {
+	"type": "ore",
+	"block": "lava",
+	"height": [263, 582],
+	"chance": 0.01,
+	"note1": "chance is conjecture, height is approximate"
+  },
+  {
+	"type": "ore",
+	"block": "emerald",
+	"height": [291, 582],
+	"chance": 0.004,
+	"note1": "chance is conjecture, height is approximate"
+  },
+  {
+	"type": "ore",
+	"block": "diamond",
+	"height": [386, 582],
+	"chance": 0.004,
+	"note1": "chance is conjecture, height is approximate"
+  },
+  {
+	"type": "ore",
+	"block": "amazonite",
+	"height": [432, 582],
+	"chance": 0.004,
+	"note1": "chance is conjecture, height is approximate"
   }
 ]

@@ -1,5 +1,8 @@
 import pygame
 from json import load
+from random import random
+from sys import exit
+from time import sleep
 
 
 def log(level: int, *message):
@@ -36,14 +39,14 @@ refresh()
 rule = cfg['rule']
 block_list = load(open('rules/'+rule+'/blocks.json', 'r'))
 rules = load(open('rules/'+rule+'/rules.json', 'r'))
-world = load(open('rules/'+rule+'/world.json', 'r'))
+world_gen = load(open('rules/'+rule+'/world.json', 'r'))
 
 # now, create block classes!
 
 
 class Block:
-	def __init__(self, name: str, **kwargs):
-		self.name = name
+	def __init__(self, block_name: str, **kwargs):
+		self.name = block_name
 		# drops
 		self.drops = kwargs['drops'] if 'drops' in kwargs else {}
 		# prereq
@@ -52,13 +55,58 @@ class Block:
 		self.color = tuple(kwargs['color']) if 'color' in kwargs else (255, 0, 255)
 		# value
 		self.value = kwargs['value'] if 'value' in kwargs else 0
-		log(0, name, 'block created')
+		log(0, name, 'block registered')
 
 
 blocks = set()
+
+
+def get_block_by_name(block_name: str) -> Block:
+	for block in blocks:
+		if block.name == block_name:
+			return block
+	raise ValueError(block_name)
+
 
 for name, data in block_list.items():
 	blocks.add(Block(name, **data))
 
 # todo: worldgen
+width = rules['width']
+height = rules['height']
+world = [[None]*width]*height
+
+for gen in world_gen:
+	if gen['type'] == 'zone':
+		for y in range(*gen['height']):
+			world[y] = [get_block_by_name(gen['block'])]*width
+	elif gen['type'] == 'ore':
+		for y in range(*gen['height']):
+			current_level = world[y]
+			for x in range(width):
+				if random() < gen['chance']:
+					current_level[x] = get_block_by_name(gen['block'])
+	else:
+		raise ValueError(gen['type'])
+	log(0, gen['block'], gen['type'], 'generated')
+
 # todo: display
+
+screen.fill((0, 0, 0))
+for y in range(height):
+	level = world[y]
+	for x in range(width):
+		block = level[x]
+		if block is None:
+			continue
+		screen.set_at((x, y), block.color)
+	refresh()
+
+while 1:
+	events = pygame.event.get()
+	for event in events:
+		if event.type == pygame.QUIT:
+			pygame.display.quit()
+			pygame.quit()
+			exit()
+	sleep(1/20)

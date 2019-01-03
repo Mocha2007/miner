@@ -24,7 +24,6 @@ def text(message: str, coords: (int, int)):
 
 
 cfg = load(open('settings.json', 'r'))
-# rules = set(load(open('rules.json', 'r')))
 
 # pygame setup
 pygame.init()

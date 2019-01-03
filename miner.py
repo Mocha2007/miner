@@ -15,8 +15,12 @@ def log(log_level: int, *message):
 
 
 def text(message: str, coords: (int, int)):
-	message_to_render = font.render(message, 1, lighterColor)
-	screen.blit(message_to_render, coords)
+	message = message.replace('\t', ' '*4)
+	lines = message.split('\n')
+	for i in range(len(lines)):
+		line = lines[i]
+		message_to_render = font.render(line, 1, lighterColor)
+		screen.blit(message_to_render, (coords[0], coords[1]+i*font_size))
 
 
 cfg = load(open('settings.json', 'r'))
@@ -29,6 +33,7 @@ size = cfg['size']
 screen = pygame.display.set_mode(size)
 refresh = pygame.display.flip
 font = pygame.font.SysFont(*cfg['font'])
+font_size = cfg['font'][1]
 icon = pygame.image.load('img/icon.png')
 pygame.display.set_icon(icon)
 pygame.display.set_caption('Miner')
@@ -187,6 +192,7 @@ while 1:
 	rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
 	pygame.draw.rect(screen, player['color'], rect)
 	# todo show coords
+	text('Miner a1\ncoords: '+str(player['pos']), (0, 0))
 	# todo show inventory
 	# gravity
 	gravity()

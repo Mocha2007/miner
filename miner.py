@@ -160,7 +160,7 @@ def move_player(d_x: int, d_y: int) -> bool:
 		player['pos'] = new_pos
 		return True
 	# try to mine UNLESS flying
-	if player['counters']['flying'] == 0 and world[new_pos[0]][new_pos[1]]:
+	if player['counters']['flying'] == 0 and world[new_pos[1]][new_pos[0]]:
 		mine(*new_pos)
 	return False
 

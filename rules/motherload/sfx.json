@@ -1,5 +1,5 @@
 {
   "event_name": ["file_1.ogg", "file_2.wav"],
-  "mine": ["mine.ogg"],
+  "NOmine": ["mine.ogg"],
   "pickup": ["pickup.ogg"]
 }

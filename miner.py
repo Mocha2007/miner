@@ -197,14 +197,18 @@ relative_center = int(size[0]/2//block_size),  int(size[1]/2//block_size) # in-g
 
 while 1:
 	game_events = set()
-	absolute_rect = player['pos'][0]-relative_center[0], player['pos'][1]-relative_center[1], player['pos'][0]+relative_center[0], player['pos'][1]+relative_center[1]  # in-game coords, absolute
+	if cfg['mini_mode']:
+		absolute_rect = 0, 0, width, height
+	else:
+		absolute_rect = player['pos'][0]-relative_center[0], player['pos'][1]-relative_center[1], \
+						player['pos'][0]+relative_center[0], player['pos'][1]+relative_center[1]  # in-game coords, absolute
 	screen.fill((0, 0, 0))
 	for y in range(absolute_rect[1], absolute_rect[3]):
-		if y < 0 or height < y:
+		if (not cfg['mini_mode']) and (y < 0 or height < y):
 			continue
 		level = world[y]
 		for x in range(absolute_rect[0], absolute_rect[2]):
-			if x < 0 or width < x:
+			if (not cfg['mini_mode']) and (x < 0 or width < x):
 				continue
 			try:
 				block = level[x]
@@ -219,8 +223,11 @@ while 1:
 				pygame.draw.rect(screen, block.color, rect)
 	# character
 	x, y = player['pos']
-	rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
-	pygame.draw.rect(screen, player['color'], rect)
+	if cfg['mini_mode']:
+		pass
+	else:
+		rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
+		pygame.draw.rect(screen, player['color'], rect)
 	# show version coords, inv
 	display_text = 'Miner a1\ncoords: '+str(player['pos'])+'\nscore: '+str(score())+'\ninv:'
 	for name, quantity in player['inventory'].items():

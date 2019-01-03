@@ -14,7 +14,7 @@ def play(filename: str):
 	pygame.mixer.Sound(filename).play()
 
 # continue
-ssssssssssss
+
 
 def log(log_level: int, *message):
 	levels = {

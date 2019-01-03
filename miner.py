@@ -114,6 +114,7 @@ for gen in world_gen:
 				if random() < gen['chance']:
 					current_level[x] = get_block_by_name(gen['block'])
 					count += 1
+	# todo vein type
 	else:
 		raise ValueError(gen['type'])
 	log(0, count, gen['block'], gen['type'], 'generated')
@@ -205,16 +206,13 @@ while 1:
 						player['pos'][0]+relative_center[0], player['pos'][1]+relative_center[1]  # in-game coords, absolute
 	screen.fill((0, 0, 0))
 	for y in range(absolute_rect[1], absolute_rect[3]):
-		if (not cfg['mini_mode']) and (y < 0 or height < y):
+		if y < 0 or height-1 < y:
 			continue
 		level = world[y]
 		for x in range(absolute_rect[0], absolute_rect[2]):
-			if (not cfg['mini_mode']) and (x < 0 or width < x):
+			if x < 0 or width-1 < x:
 				continue
-			try:
-				block = level[x]
-			except IndexError:
-				continue
+			block = level[x]
 			if block is None:
 				continue
 			if cfg['mini_mode']:

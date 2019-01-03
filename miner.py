@@ -124,9 +124,10 @@ def inv_edit(item: str, modification: int):
 
 
 def mine(block_x: int, block_y: int) -> bool:
-	b = world[block_x][block_y]
+	b = world[block_y][block_x]
 	if b:
 		# add drops to inventory
+		print(b.name, b.drops)
 		for item_name, amt in b.drops.items():
 			inv_edit(item_name, amt)
 		# delete block
@@ -160,6 +161,10 @@ def gravity() -> bool:
 	return False
 
 
+def score() -> int:
+	return sum([get_block_by_name(i_name).value*i_quantity for i_name, i_quantity in player['inventory'].items()])
+
+
 # display
 fps = 20
 tick = 0
@@ -191,9 +196,11 @@ while 1:
 	x, y = player['pos']
 	rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
 	pygame.draw.rect(screen, player['color'], rect)
-	# todo show coords
-	text('Miner a1\ncoords: '+str(player['pos']), (0, 0))
-	# todo show inventory
+	# show version coords, inv
+	display_text = 'Miner a1\ncoords: '+str(player['pos'])+'\nscore: '+str(score())+'\ninv:'
+	for name, quantity in player['inventory'].items():
+		display_text += '\n\t'+name+': '+str(quantity)
+	text(display_text, (0, 0))
 	# gravity
 	gravity()
 	# events

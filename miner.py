@@ -102,24 +102,39 @@ for gen in world_gen:
 player = {
 	'health': rules['player_hp'],
 	'inventory': {},
-	'pos': (0, -1),
+	'pos': [0, -1],
 	'color': (255, 0, 0),
+	'counters': {
+		'flying': 0,
+	}
 }
 
 
 def move_player(d_x: int, d_y: int) -> bool:
-	new_pos = player['pos'][0]+d_x, player['pos'][1]+d_y
+	new_pos = [player['pos'][0]+d_x, player['pos'][1]+d_y]
 	print(new_pos)
-	if new_pos[0] < 0 or width < new_pos[0]:
+	if new_pos[0] < 0 or width-1 < new_pos[0]:
 		return False
 	if new_pos[1] < 0 or world[new_pos[0]][new_pos[1]] is None:
 		player['pos'] = new_pos
 		return True
 	return False
 
+
+def gravity() -> bool:
+	if player['counters']['flying']*8 < fps:
+		player['counters']['flying'] += 1
+		return False
+	player['counters']['flying'] = 0
+	if world[x][y+1] is None or y < -1:
+		move_player(0, 1)
+		return True
+	return False
+
+
 # todo: display
-
-
+fps = 20
+tick = 0
 block_size = rules['block_size']
 relative_center = int(size[0]/2//block_size),  int(size[1]/2//block_size) # in-game coords, relative
 
@@ -148,6 +163,8 @@ while 1:
 	x, y = player['pos']
 	rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
 	pygame.draw.rect(screen, player['color'], rect)
+	# gravity
+	gravity()
 	# events
 	events = pygame.event.get()
 	for event in events:
@@ -155,14 +172,15 @@ while 1:
 			pygame.display.quit()
 			pygame.quit()
 			exit()
-		elif event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_w: # up
-				move_player(0, -1)
-			elif event.key == pygame.K_s: # down
-				move_player(0, 1)
-			elif event.key == pygame.K_a: # left
-				move_player(-1, 0)
-			elif event.key == pygame.K_d: # right
-				move_player(1, 0)
+	pressed = pygame.key.get_pressed()
+	if pressed[pygame.K_w]: # up
+		move_player(0, -1)
+	# if pressed[pygame.K_s]: # down
+		# move_player(0, 1)
+	if pressed[pygame.K_a]: # left
+		move_player(-1, 0)
+	if pressed[pygame.K_d]: # right
+		move_player(1, 0)
 	refresh()
-	sleep(1/20)
+	sleep(1/fps)
+	tick += 1

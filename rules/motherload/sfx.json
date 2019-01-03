@@ -1,0 +1,5 @@
+{
+  "event_name": ["file_1.ogg", "file_2.wav"],
+  "mine": ["mine.ogg"],
+  "pickup": ["pickup.ogg"]
+}

@@ -1,9 +1,20 @@
 import pygame
 from json import load
-from random import random
+from random import choice, random
 from sys import exit
 from time import sleep
 
+# sound setup
+pygame.mixer.init()
+# pygame.mixer.Channel(1)
+
+
+def play(filename: str):
+	# pygame.mixer.Channel(1).queue(pygame.mixer.Sound(filename))
+	pygame.mixer.Sound(filename).play()
+
+# continue
+ssssssssssss
 
 def log(log_level: int, *message):
 	levels = {
@@ -48,6 +59,9 @@ rule = cfg['rule']
 block_list = load(open('rules/'+rule+'/blocks.json', 'r'))
 rules = load(open('rules/'+rule+'/rules.json', 'r'))
 world_gen = load(open('rules/'+rule+'/world.json', 'r'))
+music_data = load(open('rules/'+rule+'/music.json', 'r'))
+# todo bgm pygame.mixer.Sound('mus.wav').play(-1)
+sfx_data = load(open('rules/'+rule+'/sfx.json', 'r'))
 
 # now, create block classes!
 
@@ -127,11 +141,12 @@ def mine(block_x: int, block_y: int) -> bool:
 	b = world[block_y][block_x]
 	if b:
 		# add drops to inventory
-		print(b.name, b.drops)
 		for item_name, amt in b.drops.items():
 			inv_edit(item_name, amt)
+			game_events.add('pickup')
 		# delete block
 		world[block_y][block_x] = None
+		game_events.add('mine')
 		return True
 	return False
 
@@ -165,6 +180,10 @@ def score() -> int:
 	return sum([get_block_by_name(i_name).value*i_quantity for i_name, i_quantity in player['inventory'].items()])
 
 
+def sfx():
+	[play('rules/'+rule+'/sfx/'+choice(sfx_data[e])) for e in game_events if e in sfx_data]
+
+
 # display
 fps = 20
 tick = 0
@@ -172,6 +191,7 @@ block_size = rules['block_size']
 relative_center = int(size[0]/2//block_size),  int(size[1]/2//block_size) # in-game coords, relative
 
 while 1:
+	game_events = set()
 	absolute_rect = player['pos'][0]-relative_center[0], player['pos'][1]-relative_center[1], player['pos'][0]+relative_center[0], player['pos'][1]+relative_center[1]  # in-game coords, absolute
 	screen.fill((0, 0, 0))
 	for y in range(absolute_rect[1], absolute_rect[3]):
@@ -220,5 +240,7 @@ while 1:
 	if pressed[pygame.K_d]: # right
 		move_player(1, 0)
 	refresh()
+	# sfx
+	sfx()
 	sleep(1/fps)
 	tick += 1

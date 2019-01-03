@@ -93,6 +93,13 @@ def get_block_by_name(block_name: str) -> Block:
 	raise ValueError(block_name)
 
 
+def get_surface(drop_x: int) -> int:
+	for i in range(len(world)):
+		pointer_level = world[i]
+		if pointer_level[drop_x]:
+			return i-1
+
+
 for name, data in block_list.items():
 	blocks.add(Block(name, **data))
 
@@ -124,7 +131,7 @@ for gen in world_gen:
 player = {
 	'health': rules['player_hp'],
 	'inventory': {},
-	'pos': [width//2, -1],
+	'pos': [width//2, get_surface(width//2)],
 	'color': (255, 0, 0),
 	'counters': {
 		'flying': 0,

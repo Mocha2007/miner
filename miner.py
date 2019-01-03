@@ -14,6 +14,11 @@ def log(level: int, *message):
 	print(levels[level]+':', *message)
 
 
+def text(message: str, coords: (int, int)):
+	message_to_render = font.render(message, 1, lighterColor)
+	screen.blit(message_to_render, coords)
+
+
 cfg = load(open('settings.json', 'r'))
 # rules = set(load(open('rules.json', 'r')))
 
@@ -31,8 +36,7 @@ pygame.display.set_caption('Miner')
 # loading
 screen.fill((0, 0, 0))
 lighterColor = cfg['font_color']
-loading = font.render('Loading...', 1, lighterColor)
-screen.blit(loading, (size[0]//2, size[1]//2))
+text('Loading...', (size[0]//2, size[1]//2))
 refresh()
 
 # now, load the ruleset!!!
@@ -71,7 +75,7 @@ def get_block_by_name(block_name: str) -> Block:
 for name, data in block_list.items():
 	blocks.add(Block(name, **data))
 
-# todo: worldgen
+# worldgen
 width = rules['width']
 height = rules['height']
 world = [[None]*width]*height
@@ -93,28 +97,48 @@ for gen in world_gen:
 		raise ValueError(gen['type'])
 	log(0, count, gen['block'], gen['type'], 'generated')
 
+# todo: player setup
+
+player = {
+	'health': rules['player_hp'],
+	'inventory': {},
+	'pos': (0, -1),
+	'color': (255, 0, 0),
+}
+
 # todo: display
 
 block_size = rules['block_size']
-screen.fill((0, 0, 0))
-for y in range(height):
-	level = world[y]
-	for x in range(width):
-		block = level[x]
-		if block is None:
-			continue
-		if cfg['mini_mode']:
-			screen.set_at((x, y), block.color)
-		else:
-			rect = x*block_size, y*block_size, block_size, block_size
-			pygame.draw.rect(screen, block.color, rect)
-	refresh()
+relative_center = int(size[0]/2//block_size),  int(size[1]/2//block_size) # in-game coords, relative
 
 while 1:
+	absolute_rect = player['pos'][0]-relative_center[0], player['pos'][1]-relative_center[1], player['pos'][0]+relative_center[0], player['pos'][1]+relative_center[1]  # in-game coords, absolute
+	screen.fill((0, 0, 0))
+	for y in range(absolute_rect[1], absolute_rect[3]):
+		if y < 0 or height < y:
+			continue
+		level = world[y]
+		for x in range(absolute_rect[0], absolute_rect[2]):
+			if x < 0 or width < x:
+				continue
+			block = level[x]
+			if block is None:
+				continue
+			if cfg['mini_mode']:
+				screen.set_at((x, y), block.color)
+			else:
+				rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
+				pygame.draw.rect(screen, block.color, rect)
+	# character
+	x, y = player['pos']
+	rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
+	pygame.draw.rect(screen, player['color'], rect)
+	# events
 	events = pygame.event.get()
 	for event in events:
 		if event.type == pygame.QUIT:
 			pygame.display.quit()
 			pygame.quit()
 			exit()
+	refresh()
 	sleep(1/20)

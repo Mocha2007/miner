@@ -3,5 +3,5 @@
   "font_color": [255, 255, 255],
   "size": [1280, 640],
   "rule": "motherload",
-  "mini_mode": true
+  "mini_mode": false
 }

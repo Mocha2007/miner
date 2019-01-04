@@ -14,5 +14,6 @@
   "block_size": 16,
   "scale": 1,
   "modules": ["grass", "leaf_decay", "leaf_growth"],
-  "build": true
+  "build": true,
+  "sky": true
 }

@@ -6,10 +6,10 @@ from time import sleep
 from math import ceil
 from importlib.machinery import SourceFileLoader
 sys.path.append('./modules')
-from common import Block
+from common import Block, noise
 from common import get_block_by_name as get_block_by_name2
 
-
+version = 'a0.2'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -32,11 +32,15 @@ def log(log_level: int, *message):
 
 
 def text(message: str, coords: (int, int)):
+	shadow_dist = 2
 	message = message.replace('\t', ' '*4)
 	lines = message.split('\n')
 	for i in range(len(lines)):
 		line = lines[i]
 		message_to_render = font.render(line, 1, lighterColor)
+		shadow = font.render(line, 1, (0, 0, 0))
+		for j in range(shadow_dist):
+			screen.blit(shadow, (coords[0]+j, coords[1]+i*font_size+j))
 		screen.blit(message_to_render, (coords[0], coords[1]+i*font_size))
 
 
@@ -346,6 +350,36 @@ def build():
 				world[py+dy][px+dx] = block_block
 
 
+def sky(b: bool):
+	global clouds
+	m = {
+		True: (96, 192, 224),
+		False: (0, 0, 0),
+	}
+	screen.fill(m[b])
+	if not b:
+		return None
+	# todo clouds
+	if not clouds:
+		cloud_scale = 8
+		cloud_size = size[0]//cloud_scale*2, size[1]//cloud_scale*2
+		cloud_map = {
+			True: (255, 255, 255),
+			False: m[True],
+		}
+		clouds = pygame.Surface((size[0]*2, size[1]*2))
+		noisemap = noise(cloud_size)
+		for x in range(cloud_size[0]):
+			for y in range(cloud_size[1]):
+				color = cloud_map[.6 < noisemap[y][x]]
+				if cloud_scale == 1:
+					clouds.set_at((x, y), color)
+				else:
+					rect = x*cloud_scale, y*cloud_scale, cloud_scale, cloud_scale
+					pygame.draw.rect(clouds, color, rect)
+	screen.blit(clouds, (0-player['pos'][0], 0-player['pos'][1]))
+
+
 # display
 fps = 20
 tick = 0
@@ -353,6 +387,7 @@ block_size = rules['block_size']
 relative_center = ceil(size[0]/2/block_size),  ceil(size[1]/2/block_size) # in-game coords, relative
 selected = 1
 selected_build = 0
+clouds = None
 
 while 1:
 	game_events = set()
@@ -361,7 +396,8 @@ while 1:
 	else:
 		absolute_rect = player['pos'][0]-relative_center[0], player['pos'][1]-relative_center[1], \
 						player['pos'][0]+relative_center[0], player['pos'][1]+relative_center[1]  # in-game coords, absolute
-	screen.fill((96, 192, 224))
+	# sky or blank?
+	sky(rules['sky'])
 	for y in range(absolute_rect[1], absolute_rect[3]):
 		if y < 0 or height-1 < y:
 			continue
@@ -385,7 +421,7 @@ while 1:
 		rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
 		pygame.draw.rect(screen, player['color'], rect)
 	# show version coords, inv
-	display_text = 'Miner a1\ncoords: '+str(player['pos'])+'\nscore: '+str(score())+'\ninv:'
+	display_text = 'Miner '+version+'\ncoords: '+str(player['pos'])+'\nscore: '+str(score())+'\ninv:'
 	for i, (name, quantity) in enumerate(player['inventory'].items()):
 		if i == selected_build:
 			build_info = '(b) '

@@ -1,4 +1,4 @@
-from random import choice, random
+from random import choice, random, seed, uniform
 
 
 class Block:
@@ -65,6 +65,10 @@ def von_neumann_neighborhood(coord: (int, int), world: list) -> tuple:
 		   world[y+1][x] if y+1 < len(world) else None # up, left, right, down
 
 
+def vnn2(coord: (int, int), world: list) -> tuple:
+	return tuple(i for i in von_neumann_neighborhood(coord, world) if i)
+
+
 def moore_neighborhood(coord: (int, int), world: list) -> tuple:
 	x, y = coord
 	return von_neumann_neighborhood(coord, world) + (
@@ -72,3 +76,29 @@ def moore_neighborhood(coord: (int, int), world: list) -> tuple:
 		   world[y-1][x+1] if 0 < y and x+1 < len(world[0]) else None,
 		   world[y+1][x-1] if 0 < x and y+1 < len(world) else None,
 		   world[y+1][x+1] if x+1 < len(world[0]) and y+1 < len(world) else None) # vn, ul, ur, dl, dr
+
+
+def noise(size: (int, int)) -> list:
+	smoothing = 4
+	grid = []
+	# initial generation
+	for y in range(size[1]):
+		row = []
+		for x in range(size[0]):
+			# seed((x, y))
+			point = uniform(0, 1)
+			row.append(point)
+		grid.append(row)
+	# todo smoothing
+	for i in range(smoothing):
+		new_grid = [list(i) for i in grid] # try to delete ANY links
+		for y in range(size[1]):
+			for x in range(size[0]):
+				vnn = vnn2((x, y), grid)
+				try:
+					point = sum(vnn)/len(vnn)
+				except TypeError: # todo
+					continue
+				new_grid[y][x] = point
+		grid = new_grid
+	return grid

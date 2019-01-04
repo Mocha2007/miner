@@ -13,5 +13,6 @@
   "scale": 1,
   "modules": ["grass", "leaf_decay"],
   "notes": "Ultimate goal is to mimic B1.8.1 minecraft",
-  "build": true
+  "build": true,
+  "sky": true
 }

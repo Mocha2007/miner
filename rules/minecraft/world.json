@@ -16,31 +16,45 @@
   },
   {
 	"type": "vein",
-	"size": 12,
+	"size": 16,
 	"block": "coal",
 	"height": [67, 127],
-	"chance": 0.002
+	"chance": 0.00078125
   },
   {
 	"type": "vein",
 	"size": 4,
 	"block": "iron",
 	"height": [67, 127],
-	"chance": 0.002
+	"chance": 0.001875
+  },
+  {
+	"type": "vein",
+	"size": 4,
+	"block": "lapis lazuli",
+	"height": [95, 127],
+	"chance": 0.00025
+  },
+  {
+	"type": "vein",
+	"size": 4,
+	"block": "redstone",
+	"height": [112, 127],
+	"chance": 0.0025
   },
   {
 	"type": "vein",
 	"size": 4,
 	"block": "gold",
 	"height": [94, 127],
-	"chance": 0.002
+	"chance": 0.000375
   },
   {
 	"type": "vein",
 	"size": 4,
 	"block": "diamond",
 	"height": [112, 127],
-	"chance": 0.002
+	"chance": 0.0003125
   },
   {
 	"type": "ore",

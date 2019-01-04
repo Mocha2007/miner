@@ -36,6 +36,18 @@
 		"color": [176, 143, 120],
 		"value": 256
 	},
+	"lapis lazuli": {
+	  	"prereq": "stone",
+		"drops": {"lapis lazuli": 4},
+		"color": [0, 0, 128],
+		"value": 768
+	},
+	"redstone": {
+	  	"prereq": "iron",
+		"drops": {"redstone": 4},
+		"color": [255, 0, 0],
+		"value": 64
+	},
 	"gold": {
 	  	"prereq": "iron",
 		"drops": {"gold": 1},

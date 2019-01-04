@@ -379,8 +379,9 @@ while 1:
 	else:
 		selected = 1 # reset crafting cursor
 	# run modules
-	for module in modules:
-		world = module.main(world=world, blocks=blocks)
+	for i, module in enumerate(modules):
+		if tick % fps == i:
+			world = module.main(world=world, blocks=blocks)
 	refresh()
 	# sfx
 	sfx()

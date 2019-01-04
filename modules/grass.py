@@ -11,6 +11,6 @@ def main(**kwargs) -> list:
 	for y in range(len(world)):
 		for x in range(len(world[0])):
 			block = world[y][x]
-			if block and block.name == 'dirt' and random() < 1/200 and is_exposed_to_sun((x, y), world):
+			if block and block.name == 'dirt' and random() < 1/10 and is_exposed_to_sun((x, y), world):
 				world[y][x] = get_block_by_name(blocks, 'grass')
 	return world

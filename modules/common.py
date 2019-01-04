@@ -32,7 +32,8 @@ def is_exposed_to_sun(coord: (int, int), world) -> bool:
 	return True
 
 def von_neumann_neighborhood(coord: (int, int), world: list) -> list:
-	return world[coord[0]][coord[1]-1] if 0 < coord[1] else None, \
-		   world[coord[0]-1][coord[1]] if 0 < coord[0] else None, \
-		   world[coord[0]+1][coord[1]] if coord[0] < len(world[0]) else None, \
-		   world[coord[0]][coord[1]+1] if coord[1] < len(world) else None # up, left, right, down
+	x, y = coord
+	return world[y-1][x] if 0 < y else None, \
+		   world[y][x-1] if 0 < x else None, \
+		   world[y][x+1] if x+1 < len(world[0]) else None, \
+		   world[y+1][x] if y+1 < len(world) else None # up, left, right, down

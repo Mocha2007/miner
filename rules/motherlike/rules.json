@@ -13,5 +13,5 @@
   "height": 256,
   "block_size": 16,
   "scale": 1,
-  "modules": ["grass"]
+  "modules": ["grass", "leaves"]
 }

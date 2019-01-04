@@ -1,0 +1,86 @@
+[
+  {
+	"type": "zone",
+	"block": "grass",
+	"height": [64, 65]
+  },
+  {
+	"type": "zone",
+	"block": "dirt",
+	"height": [65, 67]
+  },
+  {
+	"type": "zone",
+	"block": "stone",
+	"height": [67, 127]
+  },
+  {
+	"type": "vein",
+	"size": 12,
+	"block": "coal",
+	"height": [67, 127],
+	"chance": 0.002
+  },
+  {
+	"type": "vein",
+	"size": 4,
+	"block": "iron",
+	"height": [67, 127],
+	"chance": 0.002
+  },
+  {
+	"type": "vein",
+	"size": 4,
+	"block": "gold",
+	"height": [94, 127],
+	"chance": 0.002
+  },
+  {
+	"type": "vein",
+	"size": 4,
+	"block": "diamond",
+	"height": [112, 127],
+	"chance": 0.002
+  },
+  {
+	"type": "ore",
+	"block": "bedrock",
+	"height": [123, 124],
+	"chance": 0.2
+  },
+  {
+	"type": "ore",
+	"block": "bedrock",
+	"height": [124, 125],
+	"chance": 0.4
+  },
+  {
+	"type": "ore",
+	"block": "bedrock",
+	"height": [125, 126],
+	"chance": 0.6
+  },
+  {
+	"type": "ore",
+	"block": "bedrock",
+	"height": [126, 127],
+	"chance": 0.8
+  },
+  {
+	"type": "zone",
+	"block": "bedrock",
+	"height": [127, 128]
+  },
+  {
+	"type": "trunk",
+	"size": [5, 10],
+	"block": "wood",
+	"root": "grass",
+	"chance": 0.1
+  },
+  {
+	"type": "leaves",
+	"block": "leaves",
+	"root": "wood"
+  }
+]

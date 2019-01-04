@@ -2,6 +2,6 @@
   "font": ["trebuchetms", 15],
   "font_color": [255, 255, 255],
   "size": [1280, 640],
-  "rule": "motherlike",
+  "rule": "mocha",
   "mini_mode": false
 }

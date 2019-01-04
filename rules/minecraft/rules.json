@@ -1,0 +1,15 @@
+{
+  "levels": [
+	"none",
+	"wood",
+	"stone",
+	"iron",
+	"diamond"
+  ],
+  "player_hp": 20,
+  "width": 1024,
+  "height": 128,
+  "block_size": 16,
+  "scale": 1,
+  "modules": ["grass", "leaf_decay"]
+}

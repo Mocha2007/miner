@@ -1,14 +1,5 @@
 from random import random
-from common import get_block_by_name
-
-
-def is_exposed_to_sun(coord: (int, int), world) -> bool:
-	coord = list(coord)
-	while coord[1]:
-		if world[coord[1]-1][coord[0]] is not None:
-			return False
-		coord[1] -= 1
-	return True
+from common import get_block_by_name, is_exposed_to_sun
 
 
 def main(**kwargs) -> list:

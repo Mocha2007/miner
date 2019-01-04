@@ -21,3 +21,18 @@ def get_block_by_name(blocks: set, block_name: str) -> Block:
 		if b.name == block_name:
 			return b
 	raise ValueError(block_name)
+
+
+def is_exposed_to_sun(coord: (int, int), world) -> bool:
+	coord = list(coord)
+	while coord[1]:
+		if world[coord[1]-1][coord[0]] is not None:
+			return False
+		coord[1] -= 1
+	return True
+
+def von_neumann_neighborhood(coord: (int, int), world: list) -> list:
+	return world[coord[0]][coord[1]-1] if 0 < coord[1] else None, \
+		   world[coord[0]-1][coord[1]] if 0 < coord[0] else None, \
+		   world[coord[0]+1][coord[1]] if coord[0] < len(world[0]) else None, \
+		   world[coord[0]][coord[1]+1] if coord[1] < len(world) else None # up, left, right, down

@@ -374,7 +374,7 @@ def sky(b: bool):
 		light_sources.append(255*(block_size+sun_x)/block_size)
 	elif is_day:
 		light_sources.append(255)
-	if is_moon:
+	if is_moon and not solar_eclipse:
 		light_sources.append(128)
 	light_level = int(max(light_sources)) if is_exposed_to_sun(player['pos'], world) else background_light
 	# main

@@ -263,7 +263,7 @@ def move_player(d_x: int, d_y: int) -> bool:
 
 
 def gravity() -> bool:
-	if player['counters']['flying']*8 < fps:
+	if player['counters']['flying']*20 < fps:
 		player['counters']['flying'] += 1
 		return False
 	player['counters']['flying'] = 0

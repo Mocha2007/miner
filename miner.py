@@ -363,7 +363,7 @@ while 1:
 	else:
 		absolute_rect = player['pos'][0]-relative_center[0], player['pos'][1]-relative_center[1], \
 						player['pos'][0]+relative_center[0], player['pos'][1]+relative_center[1]  # in-game coords, absolute
-	screen.fill((0, 0, 0))
+	screen.fill((96, 192, 224))
 	for y in range(absolute_rect[1], absolute_rect[3]):
 		if y < 0 or height-1 < y:
 			continue

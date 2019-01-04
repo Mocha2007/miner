@@ -19,11 +19,13 @@
 		"value": 1
 	},
 	"stone": {
+	  	"prereq": "wood",
 		"drops": {"stone": 1},
 		"color": [192, 192, 192],
 		"value": 1
 	},
 	"coal": {
+	  	"prereq": "wood",
 		"drops": {"coal": 1},
 		"color": [64, 64, 64],
 		"value": 64
@@ -47,6 +49,7 @@
 		"value": 256
 	},
 	"diamond": {
+	  	"prereq": "iron",
 		"drops": {"diamond": 1},
 		"color": [235, 234, 233],
 		"value": 8192

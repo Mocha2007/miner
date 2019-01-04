@@ -16,10 +16,10 @@
   },
   {
 	"type": "vein",
-	"size": 8,
+	"size": 16,
 	"block": "sand",
 	"height": [63, 67],
-	"chance": 0.02
+	"chance": 0.01
   },
   {
 	"type": "vein",

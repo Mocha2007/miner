@@ -122,6 +122,32 @@ for gen in world_gen:
 					current_level[x] = get_block_by_name(gen['block'])
 					count += 1
 	# todo vein type
+	elif gen['type'] == 'vein':
+		for y in range(*gen['height']):
+			current_level = world[y]
+			for x in range(width):
+				if random() < gen['chance']:
+					block = get_block_by_name(gen['block'])
+					current_level[x] = block
+					vein_size = gen['size']-1
+					cx, cy = x, y
+					while vein_size:
+						if random() < .5: # x-axis movement
+							cx += choice([-1, 1])
+						else:
+							cy += choice([-1, 1])
+						if not gen['height'][0] <= cy < gen['height'][1]: # reset height if out of control
+							cy = y
+						# outside world:
+						if cx < 0 or cy < 0 or width-1 < cx or height-1 < cy:
+							continue
+						# if not already ore, make it ore!
+						if world[cy][cx] == block:
+							continue
+						world[cy][cx] = block
+						vein_size -= 1
+						pass
+					count += 1
 	else:
 		raise ValueError(gen['type'])
 	log(0, count, gen['block'], gen['type'], 'generated')

@@ -222,10 +222,13 @@ player = {
 
 
 def inv_edit(item: str, modification: int):
-	# todo fix negative items
 	if item in player['inventory']:
+		assert 0 <= modification + player['inventory'][item]
 		player['inventory'][item] += modification
+		if player['inventory'][item] == 0:
+			del player['inventory'][item]
 	else:
+		assert 0 <= modification
 		player['inventory'][item] = modification
 
 
@@ -321,6 +324,7 @@ def crafting():
 		selected -= 1
 	if pressed[pygame.K_DOWN]:
 		selected += 1
+
 
 # display
 fps = 20

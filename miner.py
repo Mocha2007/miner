@@ -317,12 +317,44 @@ def crafting():
 		selected += 1
 
 
+def build():
+	if not rules['build']:
+		return False
+	global selected_build
+	# make sure cursor is visible
+	if selected_build not in range(len(player['inventory'])):
+		selected_build = 0
+	# move pointer up/down
+	if pressed[pygame.K_LEFTBRACKET]:
+		selected_build -= 1
+	if pressed[pygame.K_RIGHTBRACKET]:
+		selected_build += 1
+	px, py = player['pos']
+	directions = {
+		pygame.K_i: (0, -1),
+		pygame.K_j: (-1, 0),
+		pygame.K_l: (1, 0),
+		pygame.K_k: (0, 1),
+	}
+	for key, direction in directions.items():
+		dx, dy = direction
+		if pressed[key] and not world[py+dy][px+dx]:
+			block_name = list(player['inventory'].keys())[selected_build]
+			block_block = get_block_by_name(block_name)
+			if 'item' not in block_block.tags:
+				# remove block from inventory
+				inv_edit(block_name, -1)
+				# place block in world
+				world[py+dy][px+dx] = block_block
+
+
 # display
 fps = 20
 tick = 0
 block_size = rules['block_size']
 relative_center = ceil(size[0]/2/block_size),  ceil(size[1]/2/block_size) # in-game coords, relative
 selected = 1
+selected_build = 0
 
 while 1:
 	game_events = set()
@@ -356,8 +388,12 @@ while 1:
 		pygame.draw.rect(screen, player['color'], rect)
 	# show version coords, inv
 	display_text = 'Miner a1\ncoords: '+str(player['pos'])+'\nscore: '+str(score())+'\ninv:'
-	for name, quantity in player['inventory'].items():
-		display_text += '\n\t'+name+': '+str(quantity)
+	for i, (name, quantity) in enumerate(player['inventory'].items()):
+		if i == selected_build:
+			build_info = '(b) '
+		else:
+			build_info = ''
+		display_text += '\n\t'+build_info+name+': '+str(quantity)
 	text(display_text, (0, 0))
 	# gravity
 	gravity()
@@ -381,6 +417,8 @@ while 1:
 		crafting()
 	else:
 		selected = 1 # reset crafting cursor
+	# let player build
+	build()
 	# run modules
 	for i, module in enumerate(modules):
 		if tick % fps == i:

@@ -13,5 +13,6 @@
   "height": 256,
   "block_size": 16,
   "scale": 1,
-  "modules": ["grass", "leaf_decay", "leaf_growth"]
+  "modules": ["grass", "leaf_decay", "leaf_growth"],
+  "build": true
 }

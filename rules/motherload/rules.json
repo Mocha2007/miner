@@ -14,5 +14,6 @@
   "block_size": 48,
   "note2": "5825 ft before ??? appears (466 blocks) plus 116 counted blocks, so this may be off",
   "scale": 3.81,
-  "note1": "12.5 ft per block"
+  "note1": "12.5 ft per block",
+  "build": false
 }

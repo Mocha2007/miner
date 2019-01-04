@@ -352,20 +352,46 @@ def build():
 
 def sky(b: bool):
 	global clouds
+	global darkness
+	sun_x = size[0]-tick % size[0]*2
+	moon_x = (9/8*-tick) % size[0]*2
+	solar_eclipse = abs(sun_x - moon_x) < block_size
+	is_day = 0 < sun_x < size[0]-block_size
+	is_moon = moon_x < size[0]
+	is_dawn = size[0]-block_size < sun_x < size[0]
+	is_dusk = -block_size < sun_x < 0
+	# light level calculation
+	light_sources = [64] # background light
+	if solar_eclipse:
+		light_sources.append(255*abs(sun_x - moon_x)/block_size)
+	elif is_dawn:
+		light_sources.append(255*(size[0]-sun_x)/block_size)
+	elif is_dusk:
+		light_sources.append(255*sun_x/block_size)
+	elif is_day:
+		light_sources.append(255)
+	if is_moon:
+		light_sources.append(128)
+	light_level = int(max(light_sources))
+	# main
 	m = {
-		True: (96, 192, 224),
+		True: (96, 192, 224) if is_day else (0, 0, 0),
 		False: (0, 0, 0),
 	}
 	screen.fill(m[b])
 	if not b:
 		return None
-	# todo sun
+	# todo sun/moon
+	sun_coords = sun_x, size[1]//4, block_size, block_size
+	moon_coords = moon_x, size[1]//4, block_size, block_size
+	pygame.draw.rect(screen, (255, 255, 0), sun_coords)
+	pygame.draw.rect(screen, (192, 192, 192), moon_coords) # todo vary brightness via sin with sun
 	# clouds
 	if not clouds:
 		cloud_scale = 8
 		cloud_size = size[0]//cloud_scale*2, size[1]//cloud_scale*2
 		cloud_map = {
-			True: (255, 255, 255),
+			True: (255, 255, 255, 192),
 			False: (0, 0, 0, 0),
 		}
 		clouds = pygame.Surface((size[0]*2, size[1]*2), pygame.SRCALPHA)
@@ -379,6 +405,9 @@ def sky(b: bool):
 					rect = x*cloud_scale, y*cloud_scale, cloud_scale, cloud_scale
 					pygame.draw.rect(clouds, color, rect)
 	screen.blit(clouds, (0-player['pos'][0], 0-player['pos'][1]))
+	# darkness
+	darkness = pygame.Surface(size, pygame.SRCALPHA)
+	darkness.fill((0, 0, 0, 255-light_level))
 
 
 # display
@@ -421,6 +450,8 @@ while 1:
 	else:
 		rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
 		pygame.draw.rect(screen, player['color'], rect)
+	# darkness
+	screen.blit(darkness, (0, 0))
 	# show version coords, inv
 	display_text = 'Miner '+version+'\ncoords: '+str(player['pos'])+'\nscore: '+str(score())+'\ninv:'
 	for i, (name, quantity) in enumerate(player['inventory'].items()):

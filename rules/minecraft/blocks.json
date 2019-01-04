@@ -1,7 +1,12 @@
 {
 	"leaves": {
+		"drops": {"sapling": {"probability": 0.05, "range": [1, 2]}},
 		"color": [32, 192, 32],
 		"value": 1
+	},
+	"sapling": {
+		"color": [32, 192, 32],
+		"value": 16
 	},
 	"wood": {
 		"drops": 1,

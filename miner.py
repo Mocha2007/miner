@@ -6,7 +6,7 @@ from time import sleep
 from math import ceil
 from importlib.machinery import SourceFileLoader
 sys.path.append('./modules')
-from common import Block, is_exposed_to_sun, noise
+from common import Block, is_exposed_to_sun, is_lit, noise, torch_range
 from common import get_block_by_name as get_block_by_name2
 
 version = 'a0.2'
@@ -364,7 +364,7 @@ def sky(b: bool):
 	is_dawn = size[0]-block_size < sun_x < size[0]
 	is_dusk = -block_size < sun_x < 0
 	# light level calculation
-	background_light = 64
+	background_light = 16
 	light_sources = [background_light]
 	if solar_eclipse:
 		light_sources.append(255*abs(sun_x - moon_x)/block_size)
@@ -376,7 +376,15 @@ def sky(b: bool):
 		light_sources.append(255)
 	if is_moon and not solar_eclipse:
 		light_sources.append(128)
-	light_level = int(max(light_sources)) if is_exposed_to_sun(player['pos'], world) else background_light
+	# figure out lighting from sources
+	torchlight = 255*is_lit(player['pos'], world)/torch_range
+	light_sources.append(torchlight)
+	if torchlight and is_exposed_to_sun(player['pos'], world):
+		light_level = int(max(light_sources))
+	elif torchlight:
+		light_level = int(torchlight)
+	else:
+		light_level = background_light
 	# main
 	m = {
 		True: (96, 192, 224) if is_day else (0, 0, 0),
@@ -447,6 +455,18 @@ while 1:
 			else:
 				rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
 				pygame.draw.rect(screen, block.color, rect)
+	# debug show brightness
+	if cfg['show_brightness']:
+		show_range = 8
+		y_range = player['pos'][1]-show_range, player['pos'][1]+show_range+1
+		x_range = player['pos'][0]-show_range, player['pos'][0]+show_range+1
+		for y in range(*y_range):
+			for x in range(*x_range):
+				lighting = is_lit((x, y), world)
+				rect = x * block_size - absolute_rect[0] * block_size, y * block_size - absolute_rect[
+					1] * block_size, block_size, block_size
+				pygame.draw.rect(screen, (lighting*31, lighting*31, 0), rect)
+	# end of debug
 	# character
 	x, y = player['pos']
 	if cfg['mini_mode']:

@@ -102,3 +102,54 @@ def noise(size: (int, int)) -> list:
 				new_grid[y][x] = point
 		grid = new_grid
 	return grid
+
+
+torch_range = 8
+
+
+def is_lit(coord: (int, int), world) -> int:
+	torch_name = 'torch'
+	# DO THIS FOR FASTER COMPUTATION
+	block = world[coord[1]][coord[0]]
+	if block:
+		if block.name == torch_name:
+			return torch_range
+		else:
+			return 0
+	elif is_exposed_to_sun(coord, world):
+		return torch_range
+	# MAIN FUNCTION
+	x_slice = max(0, coord[0]-torch_range), min(coord[0]+torch_range, len(world[0]))
+	y_slice = max(0, coord[1]-torch_range), min(coord[1]+torch_range, len(world))
+	# create matrix
+	lit = []
+	for y in range(*y_slice):
+		new_line = []
+		for x in range(*x_slice):
+			block = world[y][x]
+			is_torch = block and block.name == torch_name # torches
+			if block:
+				new_line.append(torch_range if is_torch else 0)
+				continue
+			iets = is_exposed_to_sun((x, y), world) # sunlight
+			new_line.append(torch_range if iets else 0)
+		lit.append(new_line)
+	# simulate lighting
+	for i in range(torch_range):
+		new_lit = [list(i) for i in lit]
+		for y, level in enumerate(lit):
+			for x, _ in enumerate(level):
+				if world[y][x]: # inside of blocks is dark
+					continue
+				if lit[y][x]: # don't recompute
+					continue
+				vnn = [i for i in von_neumann_neighborhood((x, y), lit) if i]
+				if len(vnn) == 0:
+					continue
+				brightest_neighbor = max(vnn)
+				if brightest_neighbor:
+					if torch_range == x == y: # should be the center
+						return brightest_neighbor-1
+					new_lit[y][x] = brightest_neighbor-1
+		lit = new_lit
+	return lit[torch_range][torch_range]

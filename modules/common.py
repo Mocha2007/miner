@@ -1,8 +1,11 @@
+from random import choice, random
+
+
 class Block:
 	def __init__(self, block_name: str, **kwargs):
 		self.name = block_name
 		# drops
-		self.drops = kwargs['drops'] if 'drops' in kwargs else {}
+		self.drops = Drops(self, kwargs['drops'] if 'drops' in kwargs else {})
 		# prereq
 		self.prereq = kwargs['prereq'] if 'prereq' in kwargs else None
 		# color
@@ -14,6 +17,28 @@ class Block:
 
 	def __repr__(self):
 		return self.name # temporary debug
+
+
+class Drops:
+	def __init__(self, block: Block, drops):
+		if type(drops) == dict:
+			self.drops = drops
+		elif type(drops) == int:
+			self.drops = {block.name: {'probability': 1, 'range': [drops, drops+1]}}
+		elif type(drops) == float:
+			assert 0 <= drops <= 1
+			self.drops = {block.name: {'probability': drops, 'range': [1, 2]}}
+		else:
+			raise TypeError
+
+	def simulate(self) -> dict:
+		drops = {}
+		for drop, data in self.drops.items():
+			probability = data['probability']
+			drop_range = range(*data['range'])
+			if random() < probability:
+				drops[drop] = choice(drop_range)
+		return drops
 
 
 def get_block_by_name(blocks: set, block_name: str) -> Block:

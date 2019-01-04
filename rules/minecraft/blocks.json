@@ -4,59 +4,59 @@
 		"value": 1
 	},
 	"wood": {
-		"drops": {"wood": 1},
+		"drops": 1,
 		"color": [128, 64, 0],
 		"value": 32
 	},
 	"grass": {
-		"drops": {"dirt": 1},
+		"drops": {"dirt": {"probability": 1, "range": [1, 2]}},
 		"color": [64, 192, 64],
 		"value": 1
 	},
 	"dirt": {
-		"drops": {"dirt": 1},
+		"drops": 1,
 		"color": [75, 55, 45],
 		"value": 1
 	},
 	"stone": {
 	  	"prereq": "wood",
-		"drops": {"stone": 1},
+		"drops": 1,
 		"color": [192, 192, 192],
 		"value": 1
 	},
 	"coal": {
 	  	"prereq": "wood",
-		"drops": {"coal": 1},
+		"drops": 1,
 		"color": [64, 64, 64],
 		"value": 64
 	},
 	"iron": {
 	  	"prereq": "stone",
-		"drops": {"iron": 1},
+		"drops": 1,
 		"color": [176, 143, 120],
 		"value": 256
 	},
 	"lapis lazuli": {
 	  	"prereq": "stone",
-		"drops": {"lapis lazuli": 4},
+		"drops": 1,
 		"color": [0, 0, 128],
 		"value": 768
 	},
 	"redstone": {
 	  	"prereq": "iron",
-		"drops": {"redstone": 4},
+		"drops": 1,
 		"color": [255, 0, 0],
 		"value": 64
 	},
 	"gold": {
 	  	"prereq": "iron",
-		"drops": {"gold": 1},
+		"drops": 1,
 		"color": [255, 192, 0],
 		"value": 1024
 	},
 	"diamond": {
 	  	"prereq": "iron",
-		"drops": {"diamond": 1},
+		"drops": 1,
 		"color": [0, 255, 255],
 		"value": 8192
 	},

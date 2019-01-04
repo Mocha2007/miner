@@ -1,7 +1,7 @@
 {
 	"test": {
-		"drops": {"test": 1},
-		"prereq": "iron",
+		"drops": {"test": {"probability":  0.5, "range": [1, 9, 3]}},
+		"prereq": "diamond",
 		"color": [255, 0, 255],
 	  	"value": 69,
 	  	"tags": ["unminable"]
@@ -14,42 +14,42 @@
 	  	"tags": ["unminable"]
 	},
 	"ironium": {
-		"drops": {"ironium": 1},
+		"drops": 1,
 		"color": [102, 91, 91],
 		"value": 30
 	},
 	"bronzium": {
-		"drops": {"bronzium": 1},
+		"drops": 1,
 		"color": [166, 70, 2],
 		"value": 60
 	},
 	"silverium": {
-		"drops": {"silverium": 1},
+		"drops": 1,
 		"color": [173, 170, 168],
 		"value": 100
 	},
 	"goldium": {
-		"drops": {"goldium": 1},
+		"drops": 1,
 		"color": [196, 142, 50],
 		"value": 250
 	},
 	"platinum": {
-		"drops": {"platinum": 1},
+		"drops": 1,
 		"color": [141, 132, 199],
 	  	"note": "value unknown"
 	},
 	"fossil": {
-		"drops": {"fossil": 1}
+		"drops": 1
 	},
 	"treasure": {
-		"drops": {"treasure": 1}
+		"drops": 1
 	},
 	"einsteinium": {
-		"drops": {"einsteinium": 1},
+		"drops": 1,
 		"color": [86, 103, 120]
 	},
 	"ruby": {
-		"drops": {"ruby": 1},
+		"drops": 1,
 		"color": [195, 70, 77]
 	},
 	"lava": {
@@ -57,15 +57,15 @@
 	  	"tags": ["unminable"]
 	},
 	"emerald": {
-		"drops": {"emerald": 1},
+		"drops": 1,
 		"color": [96, 183, 81]
 	},
 	"diamond": {
-		"drops": {"diamond": 1},
+		"drops": 1,
 		"color": [235, 234, 233]
 	},
 	"amazonite": {
-		"drops": {"amazonite": 1},
+		"drops": 1,
 		"color": [90, 149, 147]
 	}
 }

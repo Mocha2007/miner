@@ -16,6 +16,13 @@
   },
   {
 	"type": "vein",
+	"size": 64,
+	"block": "gravel",
+	"height": [67, 127],
+	"chance": 0.00053061
+  },
+  {
+	"type": "vein",
 	"size": 16,
 	"block": "coal",
 	"height": [67, 127],

@@ -16,10 +16,17 @@
   },
   {
 	"type": "vein",
-	"size": 12,
+	"size": 64,
+	"block": "gravel",
+	"height": [195, 255],
+	"chance": 0.0005
+  },
+  {
+	"type": "vein",
+	"size": 16,
 	"block": "coal",
 	"height": [195, 255],
-	"chance": 0.002
+	"chance": 0.0008
   },
   {
 	"type": "vein",

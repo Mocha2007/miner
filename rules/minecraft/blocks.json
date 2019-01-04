@@ -29,6 +29,11 @@
 		"color": [192, 192, 192],
 		"value": 1
 	},
+	"gravel": {
+		"drops": 1,
+		"color": [128, 128, 128],
+		"value": 4
+	},
 	"coal": {
 	  	"prereq": "wood",
 		"drops": 1,

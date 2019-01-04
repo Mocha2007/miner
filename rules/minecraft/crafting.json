@@ -7,5 +7,14 @@
 	"products": {
 	  "glass": 8
 	}
+  },
+  {
+	"reagents": {
+	  "wood": 1,
+	  "coal": 1
+	},
+	"products": {
+	  "torch": 16
+	}
   }
 ]

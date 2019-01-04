@@ -82,5 +82,10 @@
 	"bedrock": {
 		"color": [32, 32, 32],
 	  	"tags": ["unminable"]
+	},
+	"torch": {
+		"drops": 1,
+		"color": [255, 192, 0],
+		"value": 6
 	}
 }

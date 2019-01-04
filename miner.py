@@ -60,6 +60,7 @@ rule = cfg['rule']
 block_list = load(open('rules/'+rule+'/blocks.json', 'r'))
 rules = load(open('rules/'+rule+'/rules.json', 'r'))
 world_gen = load(open('rules/'+rule+'/world.json', 'r'))
+recipes = load(open('rules/'+rule+'/crafting.json', 'r'))
 music_data = load(open('rules/'+rule+'/music.json', 'r'))
 # todo bgm pygame.mixer.Sound('mus.wav').play(-1)
 sfx_data = load(open('rules/'+rule+'/sfx.json', 'r'))
@@ -281,11 +282,52 @@ def sfx():
 	[play('rules/'+rule+'/sfx/'+choice(sfx_data[e])) for e in game_events if e in sfx_data]
 
 
+def recipe_to_string(reagents: dict, products: dict) -> str:
+	return ' + '.join([str(q)+' '+r for r, q in reagents.items()]) + ' -> ' + \
+		   ' + '.join([str(q)+' '+p for p, q in products.items()])
+
+
+def crafting():
+	global selected
+	# show version coords, inv
+	t = []
+	i = 0
+	for recipe in recipes:
+		if not set(recipe['reagents'].keys()) <= set(player['inventory'].keys()):
+			continue
+		available = True
+		for reagent, quantity in recipe['reagents'].items():
+			if player['inventory'][reagent] < quantity:
+				available = False
+				break
+		if available:
+			i += 1
+			if selected == i:
+				t.append('> ('+str(i)+') '+recipe_to_string(recipe['reagents'], recipe['products']))
+				if pressed[pygame.K_x]: # crafting
+					for reagent, quantity in recipe['reagents'].items():
+						inv_edit(reagent, -quantity)
+					for product, quantity in recipe['products'].items():
+						inv_edit(product, quantity)
+			else:
+				t.append('('+str(i)+') '+recipe_to_string(recipe['reagents'], recipe['products']))
+
+	text('\n'.join(t), (0, size[1]//2))
+	# make sure cursor is visible
+	if selected not in range(1, len(t)+1):
+		selected = 1
+	# move pointer up/down
+	if pressed[pygame.K_UP]:
+		selected -= 1
+	if pressed[pygame.K_DOWN]:
+		selected += 1
+
 # display
 fps = 20
 tick = 0
 block_size = rules['block_size']
 relative_center = ceil(size[0]/2/block_size),  ceil(size[1]/2/block_size) # in-game coords, relative
+selected = 1
 
 while 1:
 	game_events = set()
@@ -340,6 +382,10 @@ while 1:
 		move_player(-1, 0)
 	if pressed[pygame.K_d]: # right
 		move_player(1, 0)
+	if pressed[pygame.K_c]: # crafting
+		crafting()
+	else:
+		selected = 1 # reset crafting cursor
 	refresh()
 	# sfx
 	sfx()

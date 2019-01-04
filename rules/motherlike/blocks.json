@@ -54,5 +54,11 @@
 	"lava": {
 		"color": [196, 46, 10],
 	  	"tags": ["unminable"]
+	},
+	"bronze": {
+	  	"prereq": "stone",
+		"drops": {"bronze": 1},
+		"color": [166, 96, 0],
+		"value": 144
 	}
 }

@@ -359,15 +359,16 @@ def sky(b: bool):
 	screen.fill(m[b])
 	if not b:
 		return None
-	# todo clouds
+	# todo sun
+	# clouds
 	if not clouds:
 		cloud_scale = 8
 		cloud_size = size[0]//cloud_scale*2, size[1]//cloud_scale*2
 		cloud_map = {
 			True: (255, 255, 255),
-			False: m[True],
+			False: (0, 0, 0, 0),
 		}
-		clouds = pygame.Surface((size[0]*2, size[1]*2))
+		clouds = pygame.Surface((size[0]*2, size[1]*2), pygame.SRCALPHA)
 		noisemap = noise(cloud_size)
 		for x in range(cloud_size[0]):
 			for y in range(cloud_size[1]):

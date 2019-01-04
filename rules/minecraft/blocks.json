@@ -33,7 +33,7 @@
 	"iron": {
 	  	"prereq": "stone",
 		"drops": {"iron": 1},
-		"color": [102, 91, 91],
+		"color": [176, 143, 120],
 		"value": 256
 	},
 	"gold": {
@@ -45,7 +45,7 @@
 	"diamond": {
 	  	"prereq": "iron",
 		"drops": {"diamond": 1},
-		"color": [235, 234, 233],
+		"color": [0, 255, 255],
 		"value": 8192
 	},
 	"bedrock": {

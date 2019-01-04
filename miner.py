@@ -136,13 +136,14 @@ for gen in world_gen:
 							cx += choice([-1, 1])
 						else:
 							cy += choice([-1, 1])
-						if not gen['height'][0] <= cy < gen['height'][1]: # reset height if out of control
+						# reset height if out of control
+						if not gen['height'][0] <= cy < gen['height'][1]:
 							cy = y
-						# outside world:
-						if cx < 0 or cy < 0 or width-1 < cx or height-1 < cy:
+						# x-value outside world:
+						if cx < 0 or width-1 < cx:
 							continue
-						# if not already ore, make it ore!
-						if world[cy][cx] == block:
+						# if not already ore (or None), make it ore!
+						if world[cy][cx] in (block, None):
 							continue
 						world[cy][cx] = block
 						vein_size -= 1
@@ -151,7 +152,7 @@ for gen in world_gen:
 	else:
 		raise ValueError(gen['type'])
 	log(0, count, gen['block'], gen['type'], 'generated')
-
+print(world)# debug
 # player setup
 
 player = {
@@ -174,6 +175,8 @@ def inv_edit(item: str, modification: int):
 
 
 def mine(block_x: int, block_y: int) -> bool:
+	if block_x < 0 or block_y < 0:
+		return False
 	b = world[block_y][block_x]
 	if b:
 		# unbreakable?

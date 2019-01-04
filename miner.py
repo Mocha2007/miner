@@ -1,9 +1,14 @@
+import sys
 import pygame
 from json import load
 from random import choice, randint, random
-from sys import exit
 from time import sleep
 from math import ceil
+from importlib.machinery import SourceFileLoader
+sys.path.append('./modules')
+from common import Block
+from common import get_block_by_name as get_block_by_name2
+
 
 # sound setup
 pygame.mixer.init()
@@ -59,6 +64,10 @@ refresh()
 rule = cfg['rule']
 block_list = load(open('rules/'+rule+'/blocks.json', 'r'))
 rules = load(open('rules/'+rule+'/rules.json', 'r'))
+module_list = rules['modules']
+modules = []
+for module in module_list:
+	modules.append(SourceFileLoader(module, 'modules/'+module+'.py').load_module())
 world_gen = load(open('rules/'+rule+'/world.json', 'r'))
 recipes = load(open('rules/'+rule+'/crafting.json', 'r'))
 music_data = load(open('rules/'+rule+'/music.json', 'r'))
@@ -66,35 +75,11 @@ music_data = load(open('rules/'+rule+'/music.json', 'r'))
 sfx_data = load(open('rules/'+rule+'/sfx.json', 'r'))
 
 # now, create block classes!
-
-
-class Block:
-	def __init__(self, block_name: str, **kwargs):
-		self.name = block_name
-		# drops
-		self.drops = kwargs['drops'] if 'drops' in kwargs else {}
-		# prereq
-		self.prereq = kwargs['prereq'] if 'prereq' in kwargs else None
-		# color
-		self.color = tuple(kwargs['color']) if 'color' in kwargs else (255, 0, 255)
-		# value
-		self.value = kwargs['value'] if 'value' in kwargs else 0
-		# tags
-		self.tags = set(kwargs['tags']) if 'tags' in kwargs else set()
-		log(0, name, 'block registered')
-
-	def __repr__(self):
-		return self.name # temporary debug
-
-
 blocks = set()
 
 
 def get_block_by_name(block_name: str) -> Block:
-	for b in blocks:
-		if b.name == block_name:
-			return b
-	raise ValueError(block_name)
+	return get_block_by_name2(blocks, block_name)
 
 
 def get_surface(drop_x: int) -> int:
@@ -106,6 +91,7 @@ def get_surface(drop_x: int) -> int:
 
 for name, data in block_list.items():
 	blocks.add(Block(name, **data))
+	log(0, name, 'block registered')
 
 # worldgen
 width = rules['width']
@@ -378,7 +364,7 @@ while 1:
 		if event.type == pygame.QUIT:
 			pygame.display.quit()
 			pygame.quit()
-			exit()
+			sys.exit()
 	pressed = pygame.key.get_pressed()
 	if pressed[pygame.K_w]: # up
 		move_player(0, -1)
@@ -392,6 +378,9 @@ while 1:
 		crafting()
 	else:
 		selected = 1 # reset crafting cursor
+	# run modules
+	for module in modules:
+		world = module.main(world=world, blocks=blocks)
 	refresh()
 	# sfx
 	sfx()

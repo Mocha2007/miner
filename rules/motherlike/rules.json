@@ -9,7 +9,7 @@
 	"diamond"
   ],
   "player_hp": 20,
-  "width": 256,
+  "width": 1024,
   "height": 256,
   "block_size": 16,
   "scale": 1,

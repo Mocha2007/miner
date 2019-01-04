@@ -45,6 +45,13 @@
   {
 	"type": "vein",
 	"size": 4,
+	"block": "gold",
+	"height": [222, 255],
+	"chance": 0.002
+  },
+  {
+	"type": "vein",
+	"size": 4,
 	"block": "diamond",
 	"height": [240, 255],
 	"chance": 0.002

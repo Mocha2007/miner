@@ -48,6 +48,12 @@
 		"color": [102, 91, 91],
 		"value": 256
 	},
+	"gold": {
+	  	"prereq": "iron",
+		"drops": {"gold": 1},
+		"color": [255, 192, 0],
+		"value": 1024
+	},
 	"diamond": {
 	  	"prereq": "iron",
 		"drops": {"diamond": 1},

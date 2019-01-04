@@ -37,3 +37,11 @@ def von_neumann_neighborhood(coord: (int, int), world: list) -> list:
 		   world[y][x-1] if 0 < x else None, \
 		   world[y][x+1] if x+1 < len(world[0]) else None, \
 		   world[y+1][x] if y+1 < len(world) else None # up, left, right, down
+
+def moore_neighborhood(coord: (int, int), world: list) -> list:
+	x, y = coord
+	return von_neumann_neighborhood(coord, world) + ( \
+		   world[y-1][x-1] if x > 0 < y else None, \
+		   world[y-1][x+1] if 0 < y and x+1 < len(world[0]) else None, \
+		   world[y+1][x-1] if 0 < x and y+1 < len(world) else None, \
+		   world[y+1][x+1] if x+1 < len(world[0]) and y+1 < len(world) else None) # vn, ul, ur, dl, dr

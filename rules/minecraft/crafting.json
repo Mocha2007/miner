@@ -1,1 +1,11 @@
-[]
+[
+  {
+	"reagents": {
+	  "sand": 8,
+	  "coal": 1
+	},
+	"products": {
+	  "glass": 8
+	}
+  }
+]

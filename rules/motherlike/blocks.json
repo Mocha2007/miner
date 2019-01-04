@@ -55,7 +55,7 @@
 		"value": 8192
 	},
 	"lava": {
-		"color": [196, 46, 10],
+		"color": [255, 128, 0],
 	  	"tags": ["unminable"]
 	},
 	"bronze": {

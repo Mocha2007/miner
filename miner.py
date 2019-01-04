@@ -1,6 +1,6 @@
 import pygame
 from json import load
-from random import choice, random
+from random import choice, randint, random
 from sys import exit
 from time import sleep
 from math import ceil
@@ -82,6 +82,9 @@ class Block:
 		self.tags = set(kwargs['tags']) if 'tags' in kwargs else set()
 		log(0, name, 'block registered')
 
+	def __repr__(self):
+		return self.name # temporary debug
+
 
 blocks = set()
 
@@ -106,28 +109,32 @@ for name, data in block_list.items():
 # worldgen
 width = rules['width']
 height = rules['height']
-world = [[None]*width]*height
+world = []
+for level in range(height):
+	new_line = []
+	for block in range(width):
+		new_line.append(None)
+	world.append(new_line)
 
 for gen in world_gen:
 	count = 0
+	block = get_block_by_name(gen['block'])
 	if gen['type'] == 'zone':
 		for y in range(*gen['height']):
-			world[y] = [get_block_by_name(gen['block'])]*width
+			world[y] = [block]*width
 			count += 1
 	elif gen['type'] == 'ore':
 		for y in range(*gen['height']):
 			current_level = world[y]
 			for x in range(width):
 				if random() < gen['chance']:
-					current_level[x] = get_block_by_name(gen['block'])
+					current_level[x] = block
 					count += 1
-	# todo vein type
 	elif gen['type'] == 'vein':
 		for y in range(*gen['height']):
 			current_level = world[y]
 			for x in range(width):
 				if random() < gen['chance']:
-					block = get_block_by_name(gen['block'])
 					current_level[x] = block
 					vein_size = gen['size']-1
 					cx, cy = x, y
@@ -147,12 +154,59 @@ for gen in world_gen:
 							continue
 						world[cy][cx] = block
 						vein_size -= 1
-						pass
 					count += 1
+	elif gen['type'] == 'trunk':
+		root = get_block_by_name(gen['root'])
+		for y in range(height):
+			current_level = world[y]
+			if None not in current_level: # underground
+				break
+			if root not in list(world[y+1]): # no root
+				continue
+			for x in range(width):
+				# no neighbors!
+				if block in current_level[x-2:x+3]:
+					continue
+				if random() < gen['chance']:
+					current_level[x] = block
+					vein_size = randint(*gen['size'])-1
+					cy = y
+					while vein_size:
+						cy -= 1
+						# stop if height out of control
+						if cy < 0:
+							break
+						world[cy][x] = block
+						vein_size -= 1
+					count += 1
+	elif gen['type'] == 'leaves':
+		root = get_block_by_name(gen['root'])
+		for y in range(height):
+			current_level = world[y]
+			if None not in current_level: # underground
+				break
+			if root not in current_level+world[y+1]: # no root
+				continue
+			for x in range(width):
+				# refuse if block not NONE
+				if current_level[x]:
+					continue
+				neighbors = current_level[x-1] if x-1 in range(len(current_level)) else None, \
+							current_level[x+1] if x+1 in range(len(current_level)) else None, \
+							world[y+1][x] if y+1 in range(len(world)) else None, \
+							world[y-1][x] if y-1 in range(len(world)) else None
+				# refuse neighbors other than ROOT or SELF or NONE
+				if not set(neighbors) <= {None, block, root}:
+					continue
+				# refuse if no root neighbor
+				if root not in neighbors:
+					continue
+				current_level[x] = block
+				count += 1
 	else:
 		raise ValueError(gen['type'])
 	log(0, count, gen['block'], gen['type'], 'generated')
-print(world)# debug
+
 # player setup
 
 player = {

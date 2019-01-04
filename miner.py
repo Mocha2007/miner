@@ -154,6 +154,9 @@ for gen in world_gen:
 				# no neighbors!
 				if block in current_level[x-2:x+3]:
 					continue
+				# below isn't root!
+				if world[y+1][x] != root:
+					continue
 				if random() < gen['chance']:
 					current_level[x] = block
 					vein_size = randint(*gen['size'])-1

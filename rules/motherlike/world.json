@@ -1,0 +1,69 @@
+[
+  {
+	"type": "zone",
+	"block": "grass",
+	"height": [192, 193]
+  },
+  {
+	"type": "zone",
+	"block": "dirt",
+	"height": [193, 195]
+  },
+  {
+	"type": "zone",
+	"block": "stone",
+	"height": [195, 255]
+  },
+  {
+	"type": "vein",
+	"size": 12,
+	"block": "coal",
+	"height": [195, 255],
+	"chance": 0.005
+  },
+  {
+	"type": "vein",
+	"size": 4,
+	"block": "copper",
+	"height": [195, 255],
+	"chance": 0.005
+  },
+  {
+	"type": "vein",
+	"size": 4,
+	"block": "tin",
+	"height": [195, 255],
+	"chance": 0.005
+  },
+  {
+	"type": "vein",
+	"size": 4,
+	"block": "iron",
+	"height": [195, 255],
+	"chance": 0.005
+  },
+  {
+	"type": "vein",
+	"size": 4,
+	"block": "diamond",
+	"height": [240, 255],
+	"chance": 0.005
+  },
+  {
+	"type": "zone",
+	"block": "lava",
+	"height": [255, 256]
+  },
+  {
+	"type": "trunk",
+	"size": [5, 10],
+	"block": "wood",
+	"root": "grass",
+	"chance": 0.1
+  },
+  {
+	"type": "leaves",
+	"block": "leaves",
+	"root": "wood"
+  }
+]

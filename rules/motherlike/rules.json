@@ -1,0 +1,15 @@
+{
+  "levels": [
+	"wood",
+	"stone",
+	"bronze",
+	"iron",
+	"steel",
+	"diamond"
+  ],
+  "player_hp": 20,
+  "width": 128,
+  "height": 256,
+  "block_size": 16,
+  "scale": 1
+}

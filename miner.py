@@ -241,6 +241,8 @@ def mine(block_x: int, block_y: int) -> bool:
 		if 'unminable' in b.tags:
 			return False
 		# todo tool level
+		if b.prereq and b.prereq not in player['inventory']: # best i can do for now :(
+			return False
 		# add drops to inventory
 		for item_name, amt in b.drops.items():
 			inv_edit(item_name, amt)

@@ -234,7 +234,7 @@ def mine(block_x: int, block_y: int) -> bool:
 	b = world[block_y][block_x]
 	if b:
 		# unbreakable?
-		if 'unbreakable' in b.tags:
+		if 'unminable' in b.tags:
 			return False
 		# todo tool level
 		# add drops to inventory

@@ -318,8 +318,6 @@ def crafting():
 
 
 def build():
-	if not rules['build']:
-		return False
 	global selected_build
 	# make sure cursor is visible
 	if selected_build not in range(len(player['inventory'])):
@@ -418,7 +416,8 @@ while 1:
 	else:
 		selected = 1 # reset crafting cursor
 	# let player build
-	build()
+	if rules['build']:
+		build()
 	# run modules
 	for i, module in enumerate(modules):
 		if tick % fps == i:

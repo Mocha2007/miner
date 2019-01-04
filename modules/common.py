@@ -104,7 +104,7 @@ def noise(size: (int, int)) -> list:
 	return grid
 
 
-torch_range = 8
+torch_range = 16
 
 
 def is_lit(coord: (int, int), world) -> int:

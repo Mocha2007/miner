@@ -353,10 +353,13 @@ def build():
 def sky(b: bool):
 	global clouds
 	global darkness
-	sun_x = size[0]-tick % size[0]*2
-	moon_x = (9/8*-tick) % size[0]*2
+	day_length_in_minutes = 24
+	time_rate = size[1]/(day_length_in_minutes*30*fps)
+	adjusted_tick = tick * time_rate
+	sun_x = size[0]-adjusted_tick % size[0]*2
+	moon_x = (9/8*-adjusted_tick) % size[0]*2
 	solar_eclipse = abs(sun_x - moon_x) < block_size
-	is_day = 0 < sun_x < size[0]-block_size
+	is_day = -block_size < sun_x < size[0]
 	is_moon = moon_x < size[0]
 	is_dawn = size[0]-block_size < sun_x < size[0]
 	is_dusk = -block_size < sun_x < 0
@@ -367,7 +370,7 @@ def sky(b: bool):
 	elif is_dawn:
 		light_sources.append(255*(size[0]-sun_x)/block_size)
 	elif is_dusk:
-		light_sources.append(255*sun_x/block_size)
+		light_sources.append(255*(block_size+sun_x)/block_size)
 	elif is_day:
 		light_sources.append(255)
 	if is_moon:

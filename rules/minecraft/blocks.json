@@ -29,6 +29,11 @@
 		"color": [192, 192, 192],
 		"value": 1
 	},
+	"sand": {
+		"drops": 1,
+		"color": [224, 208, 128],
+		"value": 1
+	},
 	"gravel": {
 		"drops": 1,
 		"color": [128, 128, 128],

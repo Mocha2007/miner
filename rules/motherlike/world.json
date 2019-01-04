@@ -19,35 +19,35 @@
 	"size": 12,
 	"block": "coal",
 	"height": [195, 255],
-	"chance": 0.005
+	"chance": 0.002
   },
   {
 	"type": "vein",
 	"size": 4,
 	"block": "copper",
 	"height": [195, 255],
-	"chance": 0.005
+	"chance": 0.002
   },
   {
 	"type": "vein",
 	"size": 4,
 	"block": "tin",
 	"height": [195, 255],
-	"chance": 0.005
+	"chance": 0.002
   },
   {
 	"type": "vein",
 	"size": 4,
 	"block": "iron",
 	"height": [195, 255],
-	"chance": 0.005
+	"chance": 0.002
   },
   {
 	"type": "vein",
 	"size": 4,
 	"block": "diamond",
 	"height": [240, 255],
-	"chance": 0.005
+	"chance": 0.002
   },
   {
 	"type": "zone",

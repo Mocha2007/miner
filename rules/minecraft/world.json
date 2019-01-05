@@ -22,6 +22,15 @@
 	"chance": 0.01
   },
   {
+	"type": "modulate",
+	"amplitude": 16,
+	"center": 0.5,
+	"replace_top": null,
+	"replace_bottom": "stone",
+	"block": null,
+	"note": "hills"
+  },
+  {
 	"type": "vein",
 	"size": 64,
 	"block": "gravel",

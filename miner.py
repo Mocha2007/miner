@@ -6,10 +6,10 @@ from time import time, sleep
 from math import ceil
 from importlib.machinery import SourceFileLoader
 sys.path.append('./modules')
-from common import Block, is_exposed_to_sun, is_lit, noise, torch_range
+from common import Block, hills, is_exposed_to_sun, is_lit, noise, torch_range
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.4'
+version = 'a0.5'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -148,7 +148,7 @@ for gen in world_gen:
 					count += 1
 	elif gen['type'] == 'noise':
 		selection_height = gen['height'][1] - gen['height'][0]
-		noise_map = noise((size[0], height)) # todo limit noise generation to generation height for optimization
+		noise_map = noise((size[0], selection_height))
 		for dy in range(selection_height):
 			for x in range(width):
 				y = gen['height'][0] + dy
@@ -206,6 +206,24 @@ for gen in world_gen:
 					continue
 				current_level[x] = block
 				count += 1
+	elif gen['type'] == 'modulate':
+		amplitude = gen['amplitude']
+		center = gen['center']
+		replace_top = get_block_by_name(gen['replace_top'])
+		replace_bottom = get_block_by_name(gen['replace_bottom'])
+		lift = hills(amplitude, center, size[0])
+		new_world = [] # IF SOMETHING IS BROKEN THIS IS WHY, MAY NEED TO BE A DEEP COPY
+		for y in range(height):
+			new_row = world[y].copy()
+			for x in range(width):
+				if y-lift[x] < 0:
+					new_row[x] = replace_top
+				elif y-lift[x] < height:
+					new_row[x] = world[y-lift[x]][x]
+				else:
+					new_row[x] = replace_bottom
+			new_world.append(new_row)
+		world = new_world
 	else:
 		raise ValueError(gen['type'])
 	log(0, count, gen['block'], gen['type'], 'generated')

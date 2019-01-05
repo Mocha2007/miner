@@ -81,6 +81,10 @@ def moore_neighborhood(coord: (int, int), world: list) -> tuple:
 		   world[y+1][x+1] if x+1 < len(world[0]) and y+1 < len(world) else None) # vn, ul, ur, dl, dr
 
 
+def mean(values) -> float:
+	return sum(values)/len(values)
+
+
 def noise(size: (int, int)) -> list:
 	smoothing = 4
 	grid = []
@@ -92,19 +96,63 @@ def noise(size: (int, int)) -> list:
 			point = uniform(0, 1)
 			row.append(point)
 		grid.append(row)
-	# todo smoothing
-	for i in range(smoothing):
+	# smoothing
+	for _ in range(smoothing):
 		new_grid = [list(i) for i in grid] # try to delete ANY links
 		for y in range(size[1]):
 			for x in range(size[0]):
 				vnn = vnn2((x, y), grid)
 				try:
-					point = sum(vnn)/len(vnn)
+					point = mean(vnn)
 				except TypeError: # todo
 					continue
 				new_grid[y][x] = point
 		grid = new_grid
 	return grid
+
+
+def noise1d(size: int) -> list:
+	smoothing = 8
+	# initial generation
+	grid = [uniform(0, 1) for _ in range(size)]
+	# smoothing
+	for _ in range(smoothing):
+		new_grid = grid.copy()
+		for x in range(size):
+			vnn = vnn2((x, 0), [grid])
+			point = mean(vnn)
+			new_grid[x] = point
+		grid = new_grid
+	return grid
+
+
+def hills(amplitude: float, center: float, size: int) -> list:
+	max_slope = 1
+	# initial generation
+	lift = [int((i-center)*amplitude) for i in noise1d(size)]
+	# smoothing
+	is_problem = True
+	while is_problem:
+		for x in range(1, size):
+			if max_slope < abs(lift[x] - lift[x-1]):
+				if lift[x-1] < lift[x]:
+					lift[x] -= 1
+				else:
+					lift[x] += 1
+		# check for problem
+		for x in range(1, size):
+			if max_slope < abs(lift[x] - lift[x-1]):
+				break
+			if x+1 == size:
+				is_problem = False
+		if is_problem:
+			continue
+		# now, check if amplitude needs to be increased
+		if max(lift) < amplitude:
+			scalar = amplitude / max(lift)
+			lift = [round(scalar*i) for i in lift]
+			is_problem = True
+	return lift
 
 
 torch_range = 16

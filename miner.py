@@ -9,7 +9,7 @@ sys.path.append('./modules')
 from common import Block, hills, is_exposed_to_sun, is_lit, noise, torch_range
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.6.1'
+version = 'a0.6.2'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -329,8 +329,8 @@ def crafting():
 		if not set(recipe['reagents'].keys()) <= set(player['inventory'].keys()):
 			continue
 		available = True
-		for reagent, quantity in recipe['reagents'].items():
-			if player['inventory'][reagent] < quantity:
+		for reagent, r_quantity in recipe['reagents'].items():
+			if player['inventory'][reagent] < r_quantity:
 				available = False
 				break
 		if available:
@@ -338,10 +338,10 @@ def crafting():
 			if selected == i:
 				t.append('> ('+str(i)+') '+recipe_to_string(recipe['reagents'], recipe['products']))
 				if pressed[pygame.K_x]: # crafting
-					for reagent, quantity in recipe['reagents'].items():
-						inv_edit(reagent, -quantity)
-					for product, quantity in recipe['products'].items():
-						inv_edit(product, quantity)
+					for reagent, r_quantity in recipe['reagents'].items():
+						inv_edit(reagent, -r_quantity)
+					for product, r_quantity in recipe['products'].items():
+						inv_edit(product, r_quantity)
 			else:
 				t.append('('+str(i)+') '+recipe_to_string(recipe['reagents'], recipe['products']))
 
@@ -431,7 +431,7 @@ def sky(b: bool):
 	screen.fill(m[b])
 	if not b:
 		return None
-	# todo sun/moon
+	# sun/moon
 	sun_coords = sun_x, size[1]//4, block_size, block_size
 	moon_coords = moon_x, size[1]//4, block_size, block_size
 	pygame.draw.rect(screen, (255, 255, 0), sun_coords)
@@ -452,8 +452,8 @@ def sky(b: bool):
 				if cloud_scale == 1:
 					clouds.set_at((x, y), color)
 				else:
-					rect = x*cloud_scale, y*cloud_scale, cloud_scale, cloud_scale
-					pygame.draw.rect(clouds, color, rect)
+					cloud_rect = x*cloud_scale, y*cloud_scale, cloud_scale, cloud_scale
+					pygame.draw.rect(clouds, color, cloud_rect)
 	screen.blit(clouds, (0-player['pos'][0], 0-player['pos'][1]))
 	# darkness
 	darkness = pygame.Surface(size, pygame.SRCALPHA)
@@ -518,7 +518,8 @@ while 1:
 	# show version coords, inv
 	current_fps = str(int(1/(time()-frame_start_time)))
 	frame_start_time = time()
-	display_text = 'Miner '+version+'\nFPS: '+current_fps+'\ncoords: '+str(player['pos'])[1:-1]+'\nscore: '+str(score())+'\ninv:'
+	display_text = 'Miner '+version+'\nFPS: '+current_fps+'\ncoords: '+str(player['pos'])[1:-1]+'\nscore: ' + \
+				   str(score())+'\ninv:'
 	for i, (name, quantity) in enumerate(player['inventory'].items()):
 		if i == selected_build:
 			build_info = '(b) '
@@ -546,6 +547,8 @@ while 1:
 		move_player(1, 0)
 	if pressed[pygame.K_c]: # crafting
 		crafting()
+	if pressed[pygame.K_ESCAPE]: # exit
+		exit()
 	else:
 		selected = 1 # reset crafting cursor
 	# let player build
@@ -558,5 +561,5 @@ while 1:
 	refresh()
 	# sfx
 	sfx()
-	sleep(1/fps)
+	sleep(.5/fps)
 	tick += 1

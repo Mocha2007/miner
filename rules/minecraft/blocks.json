@@ -2,7 +2,8 @@
 	"leaves": {
 		"drops": {"sapling": {"probability": 0.05, "range": [1, 2]}},
 		"color": [32, 192, 32],
-		"value": 1
+		"value": 1,
+	  	"tags": ["leaves"]
 	},
 	"sapling": {
 		"color": [32, 192, 32],
@@ -11,7 +12,8 @@
 	"wood": {
 		"drops": 1,
 		"color": [128, 64, 0],
-		"value": 32
+		"value": 32,
+	  	"tags": ["wood"]
 	},
 	"grass": {
 		"drops": {"dirt": {"probability": 1, "range": [1, 2]}},

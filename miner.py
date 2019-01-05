@@ -9,7 +9,7 @@ sys.path.append('./modules')
 from common import Block, hills, is_exposed_to_sun, is_lit, noise, torch_range
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.5.1'
+version = 'a0.5.2'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)

@@ -1,4 +1,5 @@
 from random import choice, random, seed, uniform
+from json import dump, load
 
 
 class Block:
@@ -153,3 +154,12 @@ def is_lit(coord: (int, int), world) -> int:
 					new_lit[y][x] = brightest_neighbor-1
 		lit = new_lit
 	return lit[torch_range][torch_range]
+
+
+def save_game(world: list, player: dict, filename: str):
+	dump({'world': world, 'player': player}, filename)
+
+
+def load_game(filename: str) -> (list, dict):
+	data = load(open(filename, 'r'))
+	return data['world'], data['player']

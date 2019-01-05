@@ -34,7 +34,8 @@
 	"sand": {
 		"drops": 1,
 		"color": [224, 208, 128],
-		"value": 1
+		"value": 1,
+	  	"tags": ["falling"]
 	},
 	"glass": {
 		"color": [192, 224, 192],
@@ -43,7 +44,8 @@
 	"gravel": {
 		"drops": 1,
 		"color": [128, 128, 128],
-		"value": 4
+		"value": 4,
+	  	"tags": ["falling"]
 	},
 	"coal": {
 	  	"prereq": "wood",

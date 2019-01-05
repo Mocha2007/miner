@@ -11,7 +11,7 @@
   "height": 128,
   "block_size": 16,
   "scale": 1,
-  "modules": ["grass", "leaf_decay", "liquid"],
+  "modules": ["falling", "grass", "leaf_decay", "liquid"],
   "notes": "Ultimate goal is to mimic B1.8.1 minecraft",
   "build": true,
   "sky": true

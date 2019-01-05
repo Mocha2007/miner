@@ -159,11 +159,10 @@ torch_range = 16
 
 
 def is_lit(coord: (int, int), world) -> int:
-	torch_name = 'torch'
 	# DO THIS FOR FASTER COMPUTATION
 	block = world[coord[1]][coord[0]]
 	if block:
-		if block.name == torch_name:
+		if 'light_source' in block.tags:
 			return torch_range
 		else:
 			return 0
@@ -178,7 +177,7 @@ def is_lit(coord: (int, int), world) -> int:
 		new_line = []
 		for x in range(*x_slice):
 			block = world[y][x]
-			is_torch = block and block.name == torch_name # torches
+			is_torch = block and 'light_source' in block.tags # torches
 			if block:
 				new_line.append(torch_range if is_torch else 0)
 				continue

@@ -92,7 +92,8 @@
 	"torch": {
 		"drops": 1,
 		"color": [255, 192, 0],
-		"value": 6
+		"value": 6,
+	  	"tags": ["light_source"]
 	},
 	"water": {
 		"color": [0, 0, 255],
@@ -100,6 +101,6 @@
 	},
 	"lava": {
 		"color": [255, 128, 0],
-	  	"tags": ["liquid", "unminable"]
+	  	"tags": ["light_source", "liquid", "unminable"]
 	}
 }

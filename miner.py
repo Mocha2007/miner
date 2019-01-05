@@ -9,7 +9,7 @@ sys.path.append('./modules')
 from common import Block, hills, is_exposed_to_sun, is_lit, noise, torch_range
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.6.3'
+version = 'a0.6.4'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -461,7 +461,7 @@ def sky(b: bool):
 
 
 # display
-fps = 30
+fps = 20
 tick = 0
 block_size = rules['block_size']
 relative_center = ceil(size[0]/2/block_size),  ceil(size[1]/2/block_size) # in-game coords, relative
@@ -557,7 +557,9 @@ while 1:
 	# run modules
 	for i, module in enumerate(modules):
 		if tick % fps == i:
+			# module_start_time = time()
 			world = module.main(world=world, blocks=blocks)
+			# log(0, module, 'took', time()-module_start_time)
 	refresh()
 	# sfx
 	sfx()

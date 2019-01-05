@@ -18,6 +18,7 @@
 	"type": "vein",
 	"size": 16,
 	"block": "sand",
+	"roots": null,
 	"height": [63, 67],
 	"chance": 0.01
   },
@@ -34,27 +35,31 @@
 	"type": "vein",
 	"size": 64,
 	"block": "gravel",
-	"height": [67, 127],
+	"roots": ["stone"],
+	"height": [64, 127],
 	"chance": 0.00053061
   },
   {
 	"type": "vein",
 	"size": 16,
 	"block": "coal",
-	"height": [67, 127],
+	"roots": ["stone"],
+	"height": [0, 127],
 	"chance": 0.00078125
   },
   {
 	"type": "vein",
 	"size": 4,
 	"block": "iron",
-	"height": [67, 127],
+	"roots": ["stone"],
+	"height": [64, 127],
 	"chance": 0.001875
   },
   {
 	"type": "vein",
 	"size": 4,
 	"block": "lapis lazuli",
+	"roots": ["stone"],
 	"height": [95, 127],
 	"chance": 0.00025
   },
@@ -62,6 +67,7 @@
 	"type": "vein",
 	"size": 4,
 	"block": "redstone",
+	"roots": ["stone"],
 	"height": [112, 127],
 	"chance": 0.0025
   },
@@ -69,6 +75,7 @@
 	"type": "vein",
 	"size": 4,
 	"block": "gold",
+	"roots": ["stone"],
 	"height": [94, 127],
 	"chance": 0.000375
   },
@@ -76,6 +83,7 @@
 	"type": "vein",
 	"size": 4,
 	"block": "diamond",
+	"roots": ["stone"],
 	"height": [112, 127],
 	"chance": 0.0003125
   },
@@ -83,6 +91,7 @@
 	"type": "vein",
 	"size": 20,
 	"block": null,
+	"roots": null,
 	"height": [64, 127],
 	"chance": 0.005,
 	"note": "caves"

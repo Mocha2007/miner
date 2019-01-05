@@ -122,9 +122,16 @@ for gen in world_gen:
 					current_level[x] = block
 					count += 1
 	elif gen['type'] == 'vein':
+		if gen['roots']:
+			roots = [get_block_by_name(i) for i in gen['roots']]
+		else:
+			roots = blocks
 		for y in range(*gen['height']):
 			current_level = world[y]
 			for x in range(width):
+				# not root!
+				if world[y][x] not in roots:
+					continue
 				if random() < gen['chance']:
 					current_level[x] = block
 					vein_size = gen['size']-1
@@ -140,9 +147,10 @@ for gen in world_gen:
 						# x-value outside world:
 						if cx < 0 or width-1 < cx:
 							continue
-						# if not already ore (or None), make it ore!
-						if world[cy][cx] in (block, None):
+						# not root!
+						if world[cy][cx] not in roots:
 							continue
+						# make it ore!
 						world[cy][cx] = block
 						vein_size -= 1
 					count += 1
@@ -404,7 +412,10 @@ def sky(b: bool):
 	if is_moon and not solar_eclipse:
 		light_sources.append(128)
 	# figure out lighting from sources
-	torchlight = 255*is_lit(player['pos'], world)/torch_range
+	try:
+		torchlight = 255*is_lit(player['pos'], world)/torch_range
+	except IndexError:
+		torchlight = 255
 	light_sources.append(torchlight)
 	if torchlight and is_exposed_to_sun(player['pos'], world):
 		light_level = int(max(light_sources))

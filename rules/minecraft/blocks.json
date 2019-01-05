@@ -18,12 +18,14 @@
 	"grass": {
 		"drops": {"dirt": {"probability": 1, "range": [1, 2]}},
 		"color": [64, 192, 64],
-		"value": 1
+		"value": 1,
+	  	"tags": ["grass"]
 	},
 	"dirt": {
 		"drops": 1,
 		"color": [75, 55, 45],
-		"value": 1
+		"value": 1,
+	  	"tags": ["dirt"]
 	},
 	"stone": {
 	  	"prereq": "wood",

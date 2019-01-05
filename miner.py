@@ -2,14 +2,14 @@ import sys
 import pygame
 from json import load
 from random import choice, randint, random
-from time import sleep
+from time import time, sleep
 from math import ceil
 from importlib.machinery import SourceFileLoader
 sys.path.append('./modules')
 from common import Block, is_exposed_to_sun, is_lit, noise, torch_range
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.3.1'
+version = 'a0.3.2'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -423,13 +423,14 @@ def sky(b: bool):
 
 
 # display
-fps = 20
+fps = 30
 tick = 0
 block_size = rules['block_size']
 relative_center = ceil(size[0]/2/block_size),  ceil(size[1]/2/block_size) # in-game coords, relative
 selected = 1
 selected_build = 0
 clouds = None
+frame_start_time = 0
 
 while 1:
 	game_events = set()
@@ -477,7 +478,9 @@ while 1:
 	# darkness
 	screen.blit(darkness, (0, 0))
 	# show version coords, inv
-	display_text = 'Miner '+version+'\ncoords: '+str(player['pos'])+'\nscore: '+str(score())+'\ninv:'
+	current_fps = str(int(1/(time()-frame_start_time)))
+	frame_start_time = time()
+	display_text = 'Miner '+version+'\nFPS: '+current_fps+'\ncoords: '+str(player['pos'])[1:-1]+'\nscore: '+str(score())+'\ninv:'
 	for i, (name, quantity) in enumerate(player['inventory'].items()):
 		if i == selected_build:
 			build_info = '(b) '

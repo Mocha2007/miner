@@ -9,7 +9,7 @@ sys.path.append('./modules')
 from common import Block, is_exposed_to_sun, is_lit, noise, torch_range
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.3'
+version = 'a0.3.1'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -340,7 +340,7 @@ def build():
 	}
 	for key, direction in directions.items():
 		dx, dy = direction
-		if pressed[key] and not world[py+dy][px+dx]:
+		if pressed[key] and not world[py+dy][px+dx] and player['inventory']:
 			block_name = list(player['inventory'].keys())[selected_build]
 			block_block = get_block_by_name(block_name)
 			if 'item' not in block_block.tags:

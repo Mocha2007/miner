@@ -43,6 +43,8 @@ class Drops:
 
 
 def get_block_by_name(blocks: set, block_name: str) -> Block:
+	if block_name is None:
+		return None
 	for b in blocks:
 		if b.name == block_name:
 			return b

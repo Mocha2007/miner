@@ -9,7 +9,7 @@ sys.path.append('./modules')
 from common import Block, is_exposed_to_sun, is_lit, noise, torch_range
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.3.2'
+version = 'a0.4'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -145,6 +145,15 @@ for gen in world_gen:
 							continue
 						world[cy][cx] = block
 						vein_size -= 1
+					count += 1
+	elif gen['type'] == 'noise':
+		selection_height = gen['height'][1] - gen['height'][0]
+		noise_map = noise((size[0], height)) # todo limit noise generation to generation height for optimization
+		for dy in range(selection_height):
+			for x in range(width):
+				y = gen['height'][0] + dy
+				if noise_map[y][x] < gen['chance']:
+					world[y][x] = block
 					count += 1
 	elif gen['type'] == 'trunk':
 		root = get_block_by_name(gen['root'])

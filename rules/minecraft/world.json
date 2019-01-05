@@ -71,6 +71,14 @@
 	"chance": 0.0003125
   },
   {
+	"type": "vein",
+	"size": 20,
+	"block": null,
+	"height": [64, 127],
+	"chance": 0.005,
+	"note": "caves"
+  },
+  {
 	"type": "ore",
 	"block": "bedrock",
 	"height": [123, 124],

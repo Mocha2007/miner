@@ -9,7 +9,7 @@ sys.path.append('./modules')
 from common import Block, hills, is_exposed_to_sun, is_lit, noise, torch_range
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.5'
+version = 'a0.5.1'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -412,9 +412,9 @@ def sky(b: bool):
 	if is_moon and not solar_eclipse:
 		light_sources.append(128)
 	# figure out lighting from sources
-	try:
+	if 0 <= player['pos'][1]:
 		torchlight = 255*is_lit(player['pos'], world)/torch_range
-	except IndexError:
+	else:
 		torchlight = 255
 	light_sources.append(torchlight)
 	if torchlight and is_exposed_to_sun(player['pos'], world):

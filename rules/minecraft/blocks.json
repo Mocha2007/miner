@@ -89,5 +89,13 @@
 		"drops": 1,
 		"color": [255, 192, 0],
 		"value": 6
+	},
+	"water": {
+		"color": [0, 0, 255],
+	  	"tags": ["liquid", "unminable"]
+	},
+	"lava": {
+		"color": [255, 128, 0],
+	  	"tags": ["liquid", "unminable"]
 	}
 }

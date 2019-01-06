@@ -6,10 +6,10 @@ from time import time, sleep
 from math import ceil
 from importlib.machinery import SourceFileLoader
 sys.path.append('./modules')
-from common import Block, hills, is_exposed_to_sun, is_lit, noise, torch_range
+from common import Block, hills, is_exposed_to_sun, is_lit, log, noise, torch_range
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.6.4'
+version = 'a0.6.5'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -18,17 +18,6 @@ pygame.mixer.init()
 def play(filename: str):
 	# pygame.mixer.Channel(1).queue(pygame.mixer.Sound(filename))
 	pygame.mixer.Sound(filename).play()
-
-# continue
-
-
-def log(log_level: int, *message):
-	levels = {
-		0: 'info',
-		1: 'warn',
-		2: 'err',
-	}
-	print(levels[log_level]+':', *message)
 
 
 def text(message: str, coords: (int, int)):

@@ -212,3 +212,12 @@ def save_game(world: list, player: dict, filename: str):
 def load_game(filename: str) -> (list, dict):
 	data = load(open(filename, 'r'))
 	return data['world'], data['player']
+
+
+def log(log_level: int, *message):
+	levels = {
+		0: 'info',
+		1: 'warn',
+		2: 'err',
+	}
+	print(levels[log_level]+':', *message)

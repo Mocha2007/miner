@@ -9,7 +9,7 @@ sys.path.append('./modules')
 from common import Block, hills, is_exposed_to_sun, is_lit, log, noise, torch_range, world_generator
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.6.6'
+version = 'a0.6.7'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -55,7 +55,6 @@ refresh()
 
 # now, load the ruleset!!!
 rule = cfg['rule']
-block_list = load(open('rules/'+rule+'/blocks.json', 'r'))
 rules = load(open('rules/'+rule+'/rules.json', 'r'))
 module_list = rules['modules']
 modules = []
@@ -66,9 +65,6 @@ recipes = load(open('rules/'+rule+'/crafting.json', 'r'))
 music_data = load(open('rules/'+rule+'/music.json', 'r'))
 # todo bgm pygame.mixer.Sound('mus.wav').play(-1)
 sfx_data = load(open('rules/'+rule+'/sfx.json', 'r'))
-
-# now, create block classes!
-blocks = set()
 
 
 def get_block_by_name(block_name: str) -> Block:
@@ -82,9 +78,21 @@ def get_surface(drop_x: int) -> int:
 			return i-1
 
 
-for name, data in block_list.items():
-	blocks.add(Block(name, **data))
-	log(0, name, 'block registered')
+# load blocks
+def load_blockpack(blockpack_name: str) -> set:
+	blocks_ = set()
+	block_list = load(open('rules/' + blockpack_name + '/blocks.json', 'r'))
+	for block_name, data in block_list.items():
+		if block_name == 'import':
+			for new_blockpack in data:
+				blocks_ = blocks_.union(load_blockpack(new_blockpack))
+			continue
+		blocks_.add(Block(block_name, **data))
+		log(0, block_name, 'block registered')
+	return blocks_
+
+
+blocks = load_blockpack(rule)
 
 # worldgen
 width = rules['width']

@@ -1,0 +1,94 @@
+{
+	"leaves": {
+		"drops": {"sapling": {"probability": 0.05, "range": [1, 2]}},
+		"color": [32, 192, 32],
+		"value": 1,
+	  	"tags": ["leaves"]
+	},
+	"sapling": {
+		"color": [32, 192, 32],
+		"value": 16
+	},
+	"wood": {
+		"drops": 1,
+		"color": [128, 64, 0],
+		"value": 32,
+	  	"tags": ["wood"]
+	},
+	"grass": {
+		"drops": {"dirt": {"probability": 1, "range": [1, 2]}},
+		"color": [64, 192, 64],
+		"value": 1,
+	  	"tags": ["grass"]
+	},
+	"dirt": {
+		"drops": 1,
+		"color": [75, 55, 45],
+		"value": 1,
+	  	"tags": ["dirt"]
+	},
+	"stone": {
+	  	"prereq": "wood",
+		"drops": 1,
+		"color": [192, 192, 192],
+		"value": 1
+	},
+	"sand": {
+		"drops": 1,
+		"color": [224, 208, 128],
+		"value": 1,
+	  	"tags": ["falling"]
+	},
+	"glass": {
+		"color": [192, 224, 192],
+		"value": 1
+	},
+	"gravel": {
+		"drops": 1,
+		"color": [128, 128, 128],
+		"value": 4,
+	  	"tags": ["falling"]
+	},
+	"coal": {
+	  	"prereq": "wood",
+		"drops": 1,
+		"color": [64, 64, 64],
+		"value": 64
+	},
+	"iron": {
+	  	"prereq": "stone",
+		"drops": 1,
+		"color": [176, 143, 120],
+		"value": 256
+	},
+	"gold": {
+	  	"prereq": "iron",
+		"drops": 1,
+		"color": [255, 192, 0],
+		"value": 1024
+	},
+	"diamond": {
+	  	"prereq": "iron",
+		"drops": 1,
+		"color": [0, 255, 255],
+		"value": 8192
+	},
+	"bedrock": {
+		"color": [32, 32, 32],
+	  	"tags": ["unminable"]
+	},
+	"torch": {
+		"drops": 1,
+		"color": [255, 192, 0],
+		"value": 6,
+	  	"tags": ["light_source"]
+	},
+	"water": {
+		"color": [0, 0, 255],
+	  	"tags": ["liquid"]
+	},
+	"lava": {
+		"color": [255, 128, 0],
+	  	"tags": ["light_source", "liquid"]
+	}
+}

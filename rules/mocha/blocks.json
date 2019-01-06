@@ -1,45 +1,5 @@
 {
-	"leaves": {
-		"drops": {"sapling": {"probability": 0.05, "range": [1, 2]}},
-		"color": [32, 192, 32],
-		"value": 1
-	},
-	"sapling": {
-		"color": [32, 192, 32],
-		"value": 16
-	},
-	"wood": {
-		"drops": 1,
-		"color": [128, 64, 0],
-		"value": 32
-	},
-	"grass": {
-		"drops": {"dirt": {"probability": 1, "range": [1, 2]}},
-		"color": [64, 192, 64],
-		"value": 1
-	},
-	"dirt": {
-		"drops": 1,
-		"color": [75, 55, 45],
-		"value": 1
-	},
-	"stone": {
-	  	"prereq": "wood",
-		"drops": 1,
-		"color": [192, 192, 192],
-		"value": 1
-	},
-	"gravel": {
-		"drops": 1,
-		"color": [128, 128, 128],
-		"value": 4
-	},
-	"coal": {
-	  	"prereq": "wood",
-		"drops": 1,
-		"color": [64, 64, 64],
-		"value": 64
-	},
+	"import": ["mc-like"],
 	"copper": {
 	  	"prereq": "stone",
 		"drops": 1,
@@ -51,28 +11,6 @@
 		"drops": 1,
 		"color": [173, 170, 168],
 		"value": 192
-	},
-	"iron": {
-	  	"prereq": "stone",
-		"drops": 1,
-		"color": [102, 91, 91],
-		"value": 256
-	},
-	"gold": {
-	  	"prereq": "iron",
-		"drops": 1,
-		"color": [255, 192, 0],
-		"value": 1024
-	},
-	"diamond": {
-	  	"prereq": "iron",
-		"drops": 1,
-		"color": [235, 234, 233],
-		"value": 8192
-	},
-	"lava": {
-		"color": [255, 128, 0],
-	  	"tags": ["unminable"]
 	},
 	"bronze": {
 	  	"prereq": "stone",

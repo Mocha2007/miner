@@ -394,7 +394,7 @@ while 1:
 		if event.type == pygame.QUIT:
 			pygame.display.quit()
 			pygame.quit()
-			sys.exit()
+			exit()
 	pressed = pygame.key.get_pressed()
 	if pressed[pygame.K_w]: # up
 		move_player(0, -1)

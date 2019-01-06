@@ -256,6 +256,8 @@ def build():
 
 
 def sky(b: bool):
+	if not b:
+		return screen.fill((0, 0, 0))
 	global clouds
 	global darkness
 	day_length_in_minutes = 24
@@ -299,8 +301,6 @@ def sky(b: bool):
 		False: (0, 0, 0),
 	}
 	screen.fill(m[b])
-	if not b:
-		return None
 	# sun/moon
 	sun_coords = sun_x, size[1]//4, block_size, block_size
 	moon_coords = moon_x, size[1]//4, block_size, block_size

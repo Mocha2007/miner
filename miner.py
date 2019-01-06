@@ -1,7 +1,7 @@
 import sys
 import pygame
 from json import load
-from random import choice, randint, random
+from random import choice
 from time import time, sleep
 from math import ceil
 from importlib.machinery import SourceFileLoader

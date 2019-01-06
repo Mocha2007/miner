@@ -6,7 +6,7 @@ from time import time, sleep
 from math import ceil
 from importlib.machinery import SourceFileLoader
 sys.path.append('./modules')
-from common import Block, hills, is_exposed_to_sun, is_lit, log, noise, torch_range, world_generator
+from common import Block, dist, hills, is_exposed_to_sun, is_lit, log, noise, torch_range, world_generator
 from common import get_block_by_name as get_block_by_name2
 
 version = 'a0.6.8'
@@ -236,23 +236,18 @@ def build():
 		selected_build -= 1
 	if pressed[pygame.K_RIGHTBRACKET]:
 		selected_build += 1
-	px, py = player['pos']
-	directions = {
-		pygame.K_i: (0, -1),
-		pygame.K_j: (-1, 0),
-		pygame.K_l: (1, 0),
-		pygame.K_k: (0, 1),
-	}
-	for key, direction in directions.items():
-		dx, dy = direction
-		if pressed[key] and not world[py+dy][px+dx] and player['inventory']:
-			block_name = list(player['inventory'].keys())[selected_build]
-			block_block = get_block_by_name(block_name)
-			if 'item' not in block_block.tags:
-				# remove block from inventory
-				inv_edit(block_name, -1)
-				# place block in world
-				world[py+dy][px+dx] = block_block
+	max_build_dist = 3
+	mouse_wants_to_build = pygame.mouse.get_pressed()[2] == 1
+	mouse_coords = get_coords_at_mouse()
+	mouse_wants_direction = mouse_wants_to_build and dist(mouse_coords, player['pos']) <= max_build_dist
+	if mouse_wants_direction and not world[mouse_coords[1]][mouse_coords[0]] and player['inventory']:
+		block_name = list(player['inventory'].keys())[selected_build]
+		block_block = get_block_by_name(block_name)
+		if 'item' not in block_block.tags:
+			# remove block from inventory
+			inv_edit(block_name, -1)
+			# place block in world
+			world[mouse_coords[1]][mouse_coords[0]] = block_block
 
 
 def sky(b: bool):
@@ -328,6 +323,12 @@ def sky(b: bool):
 	# darkness
 	darkness = pygame.Surface(size, pygame.SRCALPHA)
 	darkness.fill((0, 0, 0, 255-light_level))
+
+
+def get_coords_at_mouse() -> (int, int):
+	mouse_x, mouse_y = pygame.mouse.get_pos()
+	block_x, block_y = absolute_rect[0] + mouse_x // block_size, absolute_rect[1] + mouse_y // block_size
+	return block_x, block_y
 
 
 # display

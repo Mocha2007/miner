@@ -364,3 +364,7 @@ def world_generator(width: int, height: int, **kwargs) -> list:
 			raise ValueError(gen['type'])
 		log(0, count, gen['block'], gen['type'], 'generated')
 	return world
+
+
+def dist(a: tuple, b: tuple) -> float:
+	return sum((i-j)**2 for i, j in zip(a, b))**.5

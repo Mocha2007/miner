@@ -290,6 +290,10 @@ def move_player(d_x: int, d_y: int) -> bool:
 	if new_pos[1] < 0 or world[new_pos[1]][new_pos[0]] is None:
 		player['pos'] = new_pos
 		return True
+	# maybe it's a liquid?
+	if 'liquid' in world[new_pos[1]][new_pos[0]].tags:
+		player['pos'] = new_pos
+		return True
 	# try to mine UNLESS flying
 	if player['counters']['flying'] == 0 and world[new_pos[1]][new_pos[0]]:
 		mine(*new_pos)

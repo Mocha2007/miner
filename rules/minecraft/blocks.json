@@ -97,10 +97,10 @@
 	},
 	"water": {
 		"color": [0, 0, 255],
-	  	"tags": ["liquid", "unminable"]
+	  	"tags": ["liquid"]
 	},
 	"lava": {
 		"color": [255, 128, 0],
-	  	"tags": ["light_source", "liquid", "unminable"]
+	  	"tags": ["light_source", "liquid"]
 	}
 }

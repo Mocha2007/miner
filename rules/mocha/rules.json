@@ -15,5 +15,6 @@
   "scale": 1,
   "modules": ["grass", "leaf_decay", "leaf_growth"],
   "build": true,
-  "sky": true
+  "sky": true,
+  "powder_like": false
 }

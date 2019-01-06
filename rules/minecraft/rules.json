@@ -14,5 +14,6 @@
   "modules": ["falling", "grass", "leaf_decay", "liquid"],
   "notes": "Ultimate goal is to mimic B1.8.1 minecraft",
   "build": true,
-  "sky": true
+  "sky": true,
+  "powder_like": false
 }

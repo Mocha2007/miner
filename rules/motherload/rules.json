@@ -17,5 +17,6 @@
   "note1": "12.5 ft per block",
   "build": false,
   "sky": true,
+  "powder_like": false,
   "modules": []
 }

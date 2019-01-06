@@ -136,9 +136,10 @@ def mine(block_x: int, block_y: int) -> bool:
 		if b.prereq and b.prereq not in player['inventory']: # best i can do for now :(
 			return False
 		# add drops to inventory
-		for item_name, amt in b.drops.simulate().items():
-			inv_edit(item_name, amt)
-			game_events.add('pickup')
+		if not rules['powder_like']:
+			for item_name, amt in b.drops.simulate().items():
+				inv_edit(item_name, amt)
+				game_events.add('pickup')
 		# delete block
 		world[block_y][block_x] = None
 		game_events.add('mine')
@@ -237,21 +238,25 @@ def build():
 	if pressed[pygame.K_RIGHTBRACKET]:
 		selected_build += 1
 	max_build_dist = 3
-	mouse_wants_to_build = pygame.mouse.get_pressed()[2] == 1
 	mouse_coords = get_coords_at_mouse()
-	mouse_wants_direction = mouse_wants_to_build and dist(mouse_coords, player['pos']) <= max_build_dist
-	if not mouse_wants_direction or world[mouse_coords[1]][mouse_coords[0]]:
-		return None
-	if set(von_neumann_neighborhood(mouse_coords, world)) == {None}:
-		return None
-	if player['inventory']:
+	mouse_x, mouse_y = mouse_coords
+	mouse_wants_to_build = pygame.mouse.get_pressed()[2] == 1
+	if not rules['powder_like']:
+		mouse_distance_good = dist(mouse_coords, player['pos']) <= max_build_dist
+		if not mouse_distance_good:
+			return None
+		if set(von_neumann_neighborhood(mouse_coords, world)) == {None}:
+			return None
+	mouse_on_map = (0 <= mouse_x < len(world[0])) and (0 <= mouse_y < len(world))
+	if mouse_on_map and mouse_wants_to_build and player['inventory'] and not world[mouse_y][mouse_x]:
 		block_name = list(player['inventory'].keys())[selected_build]
 		block_block = get_block_by_name(block_name)
 		if 'item' not in block_block.tags:
 			# remove block from inventory
-			inv_edit(block_name, -1)
+			if not rules['powder_like']:
+				inv_edit(block_name, -1)
 			# place block in world
-			world[mouse_coords[1]][mouse_coords[0]] = block_block
+			world[mouse_y][mouse_x] = block_block
 
 
 def sky(b: bool):
@@ -344,6 +349,10 @@ selected = 1
 selected_build = 0
 clouds = None
 frame_start_time = 0
+# creative shit
+if rules['powder_like']:
+	for block in blocks:
+		player['inventory'][block.name] = 1
 
 while 1:
 	game_events = set()

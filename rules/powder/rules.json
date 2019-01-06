@@ -1,0 +1,12 @@
+{
+  "levels": [],
+  "player_hp": 100,
+  "width": 512,
+  "height": 256,
+  "block_size": 2,
+  "scale": 1,
+  "build": true,
+  "sky": false,
+  "powder_like": true,
+  "modules": ["falling"]
+}

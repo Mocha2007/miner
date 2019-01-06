@@ -384,7 +384,8 @@ while 1:
 		rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
 		pygame.draw.rect(screen, player['color'], rect)
 	# darkness
-	screen.blit(darkness, (0, 0))
+	if rules['sky']:
+		screen.blit(darkness, (0, 0))
 	# show version coords, inv
 	current_fps = str(int(1/(time()-frame_start_time)))
 	frame_start_time = time()

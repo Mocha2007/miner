@@ -6,7 +6,7 @@ from time import time, sleep
 from math import ceil
 from importlib.machinery import SourceFileLoader
 sys.path.append('./modules')
-from common import Block, dist, hills, is_exposed_to_sun, is_lit, log, noise, torch_range, world_generator
+from common import Block, dist, hills, is_exposed_to_sun, is_lit, log, noise, torch_range, von_neumann_neighborhood, world_generator
 from common import get_block_by_name as get_block_by_name2
 
 version = 'a0.6.8'
@@ -240,7 +240,11 @@ def build():
 	mouse_wants_to_build = pygame.mouse.get_pressed()[2] == 1
 	mouse_coords = get_coords_at_mouse()
 	mouse_wants_direction = mouse_wants_to_build and dist(mouse_coords, player['pos']) <= max_build_dist
-	if mouse_wants_direction and not world[mouse_coords[1]][mouse_coords[0]] and player['inventory']:
+	if not mouse_wants_direction or world[mouse_coords[1]][mouse_coords[0]]:
+		return None
+	if set(von_neumann_neighborhood(mouse_coords, world)) == {None}:
+		return None
+	if player['inventory']:
 		block_name = list(player['inventory'].keys())[selected_build]
 		block_block = get_block_by_name(block_name)
 		if 'item' not in block_block.tags:

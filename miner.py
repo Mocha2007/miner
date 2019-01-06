@@ -6,10 +6,10 @@ from time import time, sleep
 from math import ceil
 from importlib.machinery import SourceFileLoader
 sys.path.append('./modules')
-from common import Block, hills, is_exposed_to_sun, is_lit, log, noise, torch_range
+from common import Block, hills, is_exposed_to_sun, is_lit, log, noise, torch_range, world_generator
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.6.5'
+version = 'a0.6.6'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -89,141 +89,7 @@ for name, data in block_list.items():
 # worldgen
 width = rules['width']
 height = rules['height']
-world = []
-for level in range(height):
-	new_line = []
-	for block in range(width):
-		new_line.append(None)
-	world.append(new_line)
-
-for gen in world_gen:
-	count = 0
-	block = get_block_by_name(gen['block'])
-	if gen['type'] == 'zone':
-		for y in range(*gen['height']):
-			world[y] = [block]*width
-			count += 1
-	elif gen['type'] == 'ore':
-		for y in range(*gen['height']):
-			current_level = world[y]
-			for x in range(width):
-				if random() < gen['chance']:
-					current_level[x] = block
-					count += 1
-	elif gen['type'] == 'vein':
-		if gen['roots']:
-			roots = [get_block_by_name(i) for i in gen['roots']]
-		else:
-			roots = blocks
-		for y in range(*gen['height']):
-			current_level = world[y]
-			for x in range(width):
-				# not root!
-				if world[y][x] not in roots:
-					continue
-				if random() < gen['chance']:
-					current_level[x] = block
-					vein_size = gen['size']-1
-					cx, cy = x, y
-					while vein_size:
-						if random() < .5: # x-axis movement
-							cx += choice([-1, 1])
-						else:
-							cy += choice([-1, 1])
-						# reset height if out of control
-						if not gen['height'][0] <= cy < gen['height'][1]:
-							cy = y
-						# x-value outside world:
-						if cx < 0 or width-1 < cx:
-							continue
-						# not root!
-						if world[cy][cx] not in roots:
-							continue
-						# make it ore!
-						world[cy][cx] = block
-						vein_size -= 1
-					count += 1
-	elif gen['type'] == 'noise':
-		selection_height = gen['height'][1] - gen['height'][0]
-		noise_map = noise((size[0], selection_height))
-		for dy in range(selection_height):
-			for x in range(width):
-				y = gen['height'][0] + dy
-				if noise_map[y][x] < gen['chance']:
-					world[y][x] = block
-					count += 1
-	elif gen['type'] == 'trunk':
-		root = get_block_by_name(gen['root'])
-		for y in range(height):
-			current_level = world[y]
-			if None not in current_level: # underground
-				break
-			if root not in list(world[y+1]): # no root
-				continue
-			for x in range(width):
-				# no neighbors!
-				if block in current_level[x-2:x+3]:
-					continue
-				# below isn't root!
-				if world[y+1][x] != root:
-					continue
-				if random() < gen['chance']:
-					current_level[x] = block
-					vein_size = randint(*gen['size'])-1
-					cy = y
-					while vein_size:
-						cy -= 1
-						# stop if height out of control
-						if cy < 0:
-							break
-						world[cy][x] = block
-						vein_size -= 1
-					count += 1
-	elif gen['type'] == 'leaves':
-		root = get_block_by_name(gen['root'])
-		for y in range(height):
-			current_level = world[y]
-			if None not in current_level: # underground
-				break
-			if root not in current_level+world[y+1]: # no root
-				continue
-			for x in range(width):
-				# refuse if block not NONE
-				if current_level[x]:
-					continue
-				neighbors = current_level[x-1] if x-1 in range(len(current_level)) else None, \
-							current_level[x+1] if x+1 in range(len(current_level)) else None, \
-							world[y+1][x] if y+1 in range(len(world)) else None, \
-							world[y-1][x] if y-1 in range(len(world)) else None
-				# refuse neighbors other than ROOT or SELF or NONE
-				if not set(neighbors) <= {None, block, root}:
-					continue
-				# refuse if no root neighbor
-				if root not in neighbors:
-					continue
-				current_level[x] = block
-				count += 1
-	elif gen['type'] == 'modulate':
-		amplitude = gen['amplitude']
-		center = gen['center']
-		replace_top = get_block_by_name(gen['replace_top'])
-		replace_bottom = get_block_by_name(gen['replace_bottom'])
-		lift = hills(amplitude, center, size[0])
-		new_world = [] # IF SOMETHING IS BROKEN THIS IS WHY, MAY NEED TO BE A DEEP COPY
-		for y in range(height):
-			new_row = world[y].copy()
-			for x in range(width):
-				if y-lift[x] < 0:
-					new_row[x] = replace_top
-				elif y-lift[x] < height:
-					new_row[x] = world[y-lift[x]][x]
-				else:
-					new_row[x] = replace_bottom
-			new_world.append(new_row)
-		world = new_world
-	else:
-		raise ValueError(gen['type'])
-	log(0, count, gen['block'], gen['type'], 'generated')
+world = world_generator(width, height, world_gen=world_gen, blocks=blocks)
 
 # player setup
 

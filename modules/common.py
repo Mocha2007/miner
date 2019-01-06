@@ -54,6 +54,8 @@ def get_block_by_name(blocks: set, block_name: str):
 def is_exposed_to_sun(coord: (int, int), world) -> bool:
 	coord = list(coord)
 	while coord[1]:
+		if coord[1] <= 0:
+			return True
 		if world[coord[1]-1][coord[0]] is not None:
 			return False
 		coord[1] -= 1

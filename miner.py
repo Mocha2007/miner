@@ -9,7 +9,7 @@ sys.path.append('./modules')
 from common import Block, hills, is_exposed_to_sun, is_lit, log, noise, torch_range, world_generator
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.6.7'
+version = 'a0.6.8'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -76,6 +76,7 @@ def get_surface(drop_x: int) -> int:
 		pointer_level = world[i]
 		if pointer_level[drop_x]:
 			return i-1
+	return -1
 
 
 # load blocks
@@ -168,6 +169,8 @@ def gravity() -> bool:
 		player['counters']['flying'] += 1
 		return False
 	player['counters']['flying'] = 0
+	if height <= y+1:
+		return False
 	if world[y+1][x] is None or y < -1:
 		move_player(0, 1)
 		return True

@@ -9,7 +9,7 @@ sys.path.append('./modules')
 from common import Block, dist, hills, is_exposed_to_sun, is_lit, log, noise, torch_range, von_neumann_neighborhood, world_generator
 from common import get_block_by_name as get_block_by_name2
 
-version = 'a0.7'
+version = 'a0.8'
 # sound setup
 pygame.mixer.init()
 # pygame.mixer.Channel(1)
@@ -340,6 +340,10 @@ def get_coords_at_mouse() -> (int, int):
 	return block_x, block_y
 
 
+def is_point_on_map(coords: (int, int)) -> bool:
+	return coords[0] in range(width) and coords[1] in range(height)
+
+
 # display
 fps = 20
 tick = 0
@@ -412,6 +416,17 @@ while 1:
 			build_info = ''
 		display_text += '\n\t'+build_info+name+': '+str(quantity)
 	text(display_text, (0, 0))
+	# mouseover
+	mc = get_coords_at_mouse()
+	if is_point_on_map(mc):
+		mouse_block = str(world[mc[1]][mc[0]]).title()
+		if mouse_block == 'None':
+			mouse_block = 'Air'
+	else:
+		mouse_block = 'Void'
+	text_coords = pygame.mouse.get_pos()
+	text_coords = text_coords[0]+10, text_coords[1]+10
+	text(mouse_block, text_coords)
 	# gravity
 	gravity()
 	# events

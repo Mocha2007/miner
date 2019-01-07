@@ -3,17 +3,18 @@
 		"drops": {"sapling": {"probability": 0.05, "range": [1, 2]}},
 		"color": [32, 192, 32],
 		"value": 1,
-	  	"tags": ["leaves"]
+	  	"tags": ["flammable", "leaves"]
 	},
 	"sapling": {
 		"color": [32, 192, 32],
-		"value": 16
+		"value": 16,
+	  	"tags": ["flammable"]
 	},
 	"wood": {
 		"drops": 1,
 		"color": [128, 64, 0],
 		"value": 32,
-	  	"tags": ["wood"]
+	  	"tags": ["flammable", "wood"]
 	},
 	"grass": {
 		"drops": {"dirt": {"probability": 1, "range": [1, 2]}},
@@ -89,6 +90,10 @@
 	},
 	"lava": {
 		"color": [255, 128, 0],
-	  	"tags": ["light_source", "liquid"]
+	  	"tags": ["fire_starter", "light_source", "liquid"]
+	},
+	"fire": {
+		"color": [255, 192, 64],
+	  	"tags": ["burning", "fire_starter", "light_source"]
 	}
 }

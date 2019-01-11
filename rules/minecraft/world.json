@@ -152,5 +152,12 @@
 	"block": "water",
 	"root": "sand",
 	"chance": 0.3
+  },
+  {
+	"type": "trunk",
+	"size": [1, 1],
+	"block": "mushroom",
+	"root": "grass",
+	"chance": 0.1
   }
 ]

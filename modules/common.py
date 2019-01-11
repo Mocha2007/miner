@@ -306,6 +306,9 @@ def world_generator(width: int, height: int, **kwargs) -> list:
 					# below isn't root!
 					if world[y+1][x] != root:
 						continue
+					# don't place on top of shit
+					if world[y][x]:
+						continue
 					if random() < gen['chance']:
 						current_level[x] = block
 						vein_size = randint(*gen['size'])-1
@@ -314,6 +317,12 @@ def world_generator(width: int, height: int, **kwargs) -> list:
 							cy -= 1
 							# stop if height out of control
 							if cy < 0:
+								break
+							# stop if hits another block
+							if world[cy][x]:
+								break
+							# no neighbors!
+							if block in world[cy][x-2:x+3]:
 								break
 							world[cy][x] = block
 							vein_size -= 1

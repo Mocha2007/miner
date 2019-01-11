@@ -95,5 +95,10 @@
 	"fire": {
 		"color": [255, 192, 64],
 	  	"tags": ["burning", "fire_starter", "light_source"]
+	},
+	"mushroom": {
+		"drops": 1,
+		"color": [224, 202, 60],
+		"value": 16
 	}
 }

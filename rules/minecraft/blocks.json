@@ -11,5 +11,17 @@
 		"drops": 1,
 		"color": [255, 0, 0],
 		"value": 64
+	},
+	"rose": {
+		"drops": 1,
+		"color": [255, 0, 0],
+		"value": 16,
+	  	"tags": ["flammable"]
+	},
+	"dandelion": {
+		"drops": 1,
+		"color": [255, 224, 0],
+		"value": 16,
+	  	"tags": ["flammable"]
 	}
 }

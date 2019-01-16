@@ -16,7 +16,7 @@
   "scale": 3.81,
   "note1": "12.5 ft per block",
   "build": false,
-  "sky": true,
+  "sky": false,
   "powder_like": false,
   "modules": []
 }

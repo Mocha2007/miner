@@ -469,5 +469,6 @@ while 1:
 	refresh()
 	# sfx
 	sfx()
-	sleep(.5/fps)
+	if not rules['powder_like']:
+		sleep(.5/fps)
 	tick += 1

@@ -13,5 +13,9 @@
 	"fire": {
 		"color": [255, 64, 64],
 	  	"tags": ["burning", "fire_starter"]
+	},
+	"seed": {
+		"color": [144, 192, 64],
+	  	"tags": ["falling", "flammable"]
 	}
 }

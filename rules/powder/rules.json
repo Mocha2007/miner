@@ -1,8 +1,8 @@
 {
   "levels": [],
   "player_hp": 100,
-  "width": 256,
-  "height": 128,
+  "width": 320,
+  "height": 160,
   "block_size": 4,
   "scale": 1,
   "build": true,

@@ -4,6 +4,14 @@
 	},
 	"powder": {
 		"color": [242, 189, 107],
-	  	"tags": ["falling"]
+	  	"tags": ["falling", "flammable"]
+	},
+	"water": {
+		"color": [64, 64, 255],
+	  	"tags": ["liquid"]
+	},
+	"fire": {
+		"color": [255, 64, 64],
+	  	"tags": ["burning", "fire_starter"]
 	}
 }

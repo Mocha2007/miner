@@ -15,6 +15,8 @@ def main(**kwargs) -> list:
 				continue
 			if 'liquid' not in block.tags:
 				continue
+			if len(world) <= y+1:
+				continue
 			if not world[y+1][x]: # below
 				world[y+1][x] = block
 				world[y][x] = None

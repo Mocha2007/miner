@@ -462,7 +462,7 @@ while 1:
 		build()
 	# run modules
 	for i, module in enumerate(modules):
-		if tick % fps == i:
+		if tick % fps == i or rules['powder_like']:
 			# module_start_time = time()
 			world = module.main(world=world, blocks=blocks)
 			# log(0, module, 'took', time()-module_start_time)

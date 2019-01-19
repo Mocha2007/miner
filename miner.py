@@ -379,6 +379,8 @@ while 1:
 		if y < 0 or height-1 < y:
 			continue
 		level = world[y]
+		if level == [None]*width:
+			continue
 		for x in range(absolute_rect[0], absolute_rect[2]):
 			if x < 0 or width-1 < x:
 				continue

@@ -240,11 +240,6 @@ def build():
 	# make sure cursor is visible
 	if selected_build not in range(len(player['inventory'])):
 		selected_build = 0
-	# move pointer up/down
-	if pressed[pygame.K_LEFTBRACKET]:
-		selected_build -= 1
-	if pressed[pygame.K_RIGHTBRACKET]:
-		selected_build += 1
 	max_build_dist = 3
 	mouse_coords = get_coords_at_mouse()
 	mouse_x, mouse_y = mouse_coords
@@ -444,6 +439,11 @@ while 1:
 			pygame.display.quit()
 			pygame.quit()
 			exit()
+		elif event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_LEFTBRACKET:
+				selected_build -= 1
+			elif event.key == pygame.K_RIGHTBRACKET:
+				selected_build += 1
 	pressed = pygame.key.get_pressed()
 	if pressed[pygame.K_w]: # up
 		move_player(0, -1)

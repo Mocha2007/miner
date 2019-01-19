@@ -17,5 +17,9 @@
 	"seed": {
 		"color": [144, 192, 64],
 	  	"tags": ["falling", "flammable"]
+	},
+	"gunpowder": {
+		"color": [176, 128, 80],
+	  	"tags": ["falling", "flammable"]
 	}
 }

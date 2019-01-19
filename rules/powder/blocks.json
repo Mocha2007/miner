@@ -1,10 +1,9 @@
 {
-	"bedrock": {
-		"color": [64, 64, 64],
-	  	"tags": ["unminable"]
+	"block": {
+		"color": [128, 128, 128]
 	},
 	"powder": {
-		"color": [255, 192, 0],
+		"color": [242, 189, 107],
 	  	"tags": ["falling"]
 	}
 }

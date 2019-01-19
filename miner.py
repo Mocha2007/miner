@@ -101,11 +101,15 @@ height = rules['height']
 world = world_generator(width, height, world_gen=world_gen, blocks=blocks)
 
 # player setup
+if rules['powder_like']:
+	start_pos = [width//2, height//2]
+else:
+	start_pos = [width//2, get_surface(width//2)]
 
 player = {
 	'health': rules['player_hp'],
 	'inventory': {},
-	'pos': [width//2, get_surface(width//2)],
+	'pos': start_pos,
 	'color': (255, 0, 0),
 	'counters': {
 		'flying': 0,
@@ -152,6 +156,8 @@ def move_player(d_x: int, d_y: int) -> bool:
 	# print(new_pos)
 	if new_pos[0] < 0 or width-1 < new_pos[0]:
 		return False
+	if height <= new_pos[1]:
+		return False
 	if new_pos[1] < 0 or world[new_pos[1]][new_pos[0]] is None:
 		player['pos'] = new_pos
 		return True
@@ -166,6 +172,8 @@ def move_player(d_x: int, d_y: int) -> bool:
 
 
 def gravity() -> bool:
+	if rules['powder_like']:
+		return False
 	if player['counters']['flying']*20 < fps:
 		player['counters']['flying'] += 1
 		return False
@@ -396,9 +404,7 @@ while 1:
 	# end of debug
 	# character
 	x, y = player['pos']
-	if cfg['mini_mode']:
-		pass
-	else:
+	if not (cfg['mini_mode']):# or rules['powder_like']):
 		rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
 		pygame.draw.rect(screen, player['color'], rect)
 	# darkness

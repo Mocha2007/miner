@@ -2,7 +2,7 @@
   "font": ["trebuchetms", 15],
   "font_color": [255, 255, 255],
   "size": [1280, 640],
-  "rule": "powder",
+  "rule": "minecraft",
   "mini_mode": false,
   "show_brightness": false
 }

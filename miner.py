@@ -404,7 +404,7 @@ while 1:
 	# end of debug
 	# character
 	x, y = player['pos']
-	if not (cfg['mini_mode']):# or rules['powder_like']):
+	if not (cfg['mini_mode'] or rules['powder_like']):
 		rect = x*block_size-absolute_rect[0]*block_size, y*block_size-absolute_rect[1]*block_size, block_size, block_size
 		pygame.draw.rect(screen, player['color'], rect)
 	# darkness

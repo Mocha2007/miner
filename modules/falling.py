@@ -11,6 +11,8 @@ def main(**kwargs) -> list:
 				continue
 			if 'falling' not in block.tags:
 				continue
+			if len(world) <= y+1:
+				continue
 			if not world[y+1][x]: # below
 				new_world[y+1][x] = block
 				new_world[y][x] = None

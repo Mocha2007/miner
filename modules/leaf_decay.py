@@ -8,12 +8,11 @@ def main(**kwargs) -> list:
 	"""
 	world = kwargs['world']
 	# check for decay
-	for y in range(len(world)):
-		for x in range(len(world[0])):
-			block = world[y][x]
+	for y, row in enumerate(world):
+		for x, block in enumerate(row):
 			if block and 'leaves' in block.tags and random() < 1/10:
 				vnns = set(von_neumann_neighborhood((x, y), world))
-				wood_in_hood = True in ['wood' in i.tags for i in vnns if type(i) == Block]
+				wood_in_hood = True in ['wood' in i.tags for i in vnns if isinstance(i, Block)]
 				if not wood_in_hood:
 					world[y][x] = None
 	return world

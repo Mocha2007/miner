@@ -22,11 +22,11 @@ class Block:
 
 class Drops:
 	def __init__(self, block: Block, drops):
-		if type(drops) == dict:
+		if isinstance(drops, dict):
 			self.drops = drops
-		elif type(drops) == int:
+		elif isinstance(drops, int):
 			self.drops = {block.name: {'probability': 1, 'range': [drops, drops+1]}}
-		elif type(drops) == float:
+		elif isinstance(drops, float):
 			assert 0 <= drops <= 1
 			self.drops = {block.name: {'probability': drops, 'range': [1, 2]}}
 		else:
@@ -229,7 +229,7 @@ def world_generator(width: int, height: int, **kwargs) -> list:
 	blocks = kwargs['blocks']
 	world_gen = kwargs['world_gen']
 	world = []
-	for level in range(height):
+	for _ in range(height):
 		new_line = []
 		for block in range(width):
 			new_line.append(None)

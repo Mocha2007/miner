@@ -4,9 +4,8 @@ def main(**kwargs) -> list:
 	"""
 	world = kwargs['world']
 	new_world = [list(i) for i in world]
-	for y in range(len(world)):
-		for x in range(len(world[0])):
-			block = world[y][x]
+	for y, row in enumerate(world):
+		for x, block in enumerate(row):
 			if not block:
 				continue
 			if 'falling' not in block.tags:

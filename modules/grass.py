@@ -16,10 +16,10 @@ def main(**kwargs) -> list:
 			if 1/10 < random():
 				continue
 			vnns = set(von_neumann_neighborhood((x, y), world))
-			grass_in_hood = True in ['grass' in i.tags for i in vnns if type(i) == Block]
+			grass_in_hood = True in ['grass' in i.tags for i in vnns if isinstance(i, Block)]
 			if not grass_in_hood:
 				continue
-			grass = [i for i in vnns if type(i) == Block and 'grass' in i.tags][0]
+			grass = [i for i in vnns if isinstance(i, Block) and 'grass' in i.tags][0]
 			if is_exposed_to_sun((x, y), world):
 				world[y][x] = grass
 	return world

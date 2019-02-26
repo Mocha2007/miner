@@ -15,14 +15,14 @@ def main(**kwargs) -> list:
 		for x, block in enumerate(row):
 			if not block and random() < 1/10:
 				vnns = set(von_neumann_neighborhood((x, y), world))
-				wood_in_hood = True in ['wood' in i.tags for i in vnns if type(i) == Block]
+				wood_in_hood = True in ['wood' in i.tags for i in vnns if isinstance(i, Block)]
 				if not wood_in_hood:
 					continue
-				leaves_in_hood = True in ['leaves' in i.tags for i in vnns if type(i) == Block]
+				leaves_in_hood = True in ['leaves' in i.tags for i in vnns if isinstance(i, Block)]
 				if not leaves_in_hood:
 					continue
-				leaves = [i for i in vnns if type(i) == Block and 'leaves' in i.tags][0]
-				only_alw_in_hood = False not in ['wood' in i.tags or 'leaves' in i.tags for i in vnns if type(i) == Block]
+				leaves = [i for i in vnns if isinstance(i, Block) and 'leaves' in i.tags][0]
+				only_alw_in_hood = False not in ['wood' in i.tags or 'leaves' in i.tags for i in vnns if isinstance(i, Block)]
 				if only_alw_in_hood:
 					world[y][x] = leaves
 	return world

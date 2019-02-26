@@ -19,9 +19,9 @@ def main(**kwargs) -> list:
 			# burn shit
 			elif random() < 1/4 and 'flammable' in block.tags:
 				vnns = set(von_neumann_neighborhood((x, y), world))
-				fire_starter_in_hood = True in ['fire_starter' in i.tags for i in vnns if type(i) == Block]
+				fire_starter_in_hood = True in ['fire_starter' in i.tags for i in vnns if isinstance(i, Block)]
 				if not fire_starter_in_hood:
 					continue
-				fire = [i for i in blocks if type(i) == Block and 'burning' in i.tags][0]
+				fire = [i for i in blocks if isinstance(i, Block) and 'burning' in i.tags][0]
 				world[y][x] = fire
 	return world

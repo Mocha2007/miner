@@ -6,7 +6,7 @@ from time import time, sleep
 from math import ceil
 from importlib.machinery import SourceFileLoader
 sys.path.append('./modules')
-from common import Block, dist, hills, is_exposed_to_sun, is_lit, log, noise, torch_range, von_neumann_neighborhood, world_generator
+from common import Block, dist, is_exposed_to_sun, is_lit, log, noise, torch_range, von_neumann_neighborhood, world_generator
 from common import get_block_by_name as get_block_by_name2
 
 version = 'a0.8'
@@ -24,8 +24,7 @@ def text(message: str, coords: (int, int)):
 	shadow_dist = 2
 	message = message.replace('\t', ' '*4)
 	lines = message.split('\n')
-	for i in range(len(lines)):
-		line = lines[i]
+	for i, line in enumerate(lines):
 		message_to_render = font.render(line, 1, lighterColor)
 		shadow = font.render(line, 1, (0, 0, 0))
 		for j in range(shadow_dist):
@@ -72,8 +71,7 @@ def get_block_by_name(block_name: str) -> Block:
 
 
 def get_surface(drop_x: int) -> int:
-	for i in range(len(world)):
-		pointer_level = world[i]
+	for i, pointer_level in enumerate(world):
 		if pointer_level[drop_x]:
 			return i-1
 	return -1

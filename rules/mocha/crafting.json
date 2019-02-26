@@ -1,11 +1,11 @@
 [
-  {
-	"reagents": {
-	  "copper": 3,
-	  "tin": 1
-	},
-	"products": {
-	  "bronze": 4
+	{
+		"reagents": {
+			"copper": 3,
+			"tin": 1
+		},
+		"products": {
+			"bronze": 4
+		}
 	}
-  }
 ]

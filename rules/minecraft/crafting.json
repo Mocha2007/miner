@@ -1,20 +1,20 @@
 [
-  {
-	"reagents": {
-	  "sand": 8,
-	  "coal": 1
+	{
+		"reagents": {
+			"sand": 8,
+			"coal": 1
+		},
+		"products": {
+			"glass": 8
+		}
 	},
-	"products": {
-	  "glass": 8
+	{
+		"reagents": {
+			"wood": 1,
+			"coal": 1
+		},
+		"products": {
+			"torch": 16
+		}
 	}
-  },
-  {
-	"reagents": {
-	  "wood": 1,
-	  "coal": 1
-	},
-	"products": {
-	  "torch": 16
-	}
-  }
 ]

@@ -9,4 +9,4 @@
   "sky": false,
   "powder_like": true,
   "modules": ["falling", "fire", "liquid"]
-}
+};
